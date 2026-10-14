@@ -235,6 +235,33 @@
    ]
   },
   {
+   "type": "bitmap",
+   "file": "evo:gui/race_info.png",
+   "ascent": 39,
+   "height": 211,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/classe_info.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/fiche.png",
+   "ascent": 39,
+   "height": 229,
+   "chars": [
+    ""
+   ]
+  },
+  {
    "type": "space",
    "advances": {
     "": -1,
