@@ -3,7 +3,7 @@ from PIL import Image
 S=12; M=26
 SRC='/tmp/claude-0/sc/rp/out3'; PK='/tmp/claude-0/sc/rp/pack'
 os.makedirs(PK+'/assets/evo/textures/gui',exist_ok=True); os.makedirs(PK+'/assets/minecraft/font',exist_ok=True)
-names=['menu','race','classe','talents','reset']
+names=['menu','race','classe','talents','reset','metiers']
 prov=[]; glyph={}
 for i,n in enumerate(names):
     shutil.copy(f'{SRC}/{n}.png',f'{PK}/assets/evo/textures/gui/{n}.png')

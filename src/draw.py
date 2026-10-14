@@ -106,7 +106,8 @@ if __name__=='__main__':
            'race':(4,[4,19,21,23,25],[19,21,23,25]),
            'classe':(6,[4,20,22,24,38,40,42],[20,22,24,38,40,42]),
            'talents':(6,[1,4,7]+[c+9*r for c in (1,4,7) for r in (1,2,3,4)]+[45,49,53],[]),
-           'reset':(3,[11,15],[11,15])}
+           'reset':(3,[11,15],[11,15]),
+           'metiers':(6,[4,11,12,13,14,15,20,21,23,24,28,29,30,31,32,33,34,39,40,41,45],[])}
     for k,(rows,used,feat) in menus.items():
         im=make(rows,used,feat); im.save(f'{out}/{k}.png')
         im.resize((im.width*4,im.height*4),Image.NEAREST).save(f'{out}/preview_{k}.png')

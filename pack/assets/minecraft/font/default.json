@@ -46,6 +46,15 @@
    ]
   },
   {
+   "type": "bitmap",
+   "file": "evo:gui/metiers.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
    "type": "space",
    "advances": {
     "": -1,
