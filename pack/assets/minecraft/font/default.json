@@ -55,6 +55,186 @@
    ]
   },
   {
+   "type": "bitmap",
+   "file": "evo:gui/mc_skilloverview.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_acrobatics.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_alchemy.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_archery.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_axes.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_crossbows.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_excavation.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_fishing.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_herbalism.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_maces.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_mining.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_repair.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_salvage.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_smelting.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_spears.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_swords.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_taming.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_tridents.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_unarmed.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/mc_woodcutting.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
    "type": "space",
    "advances": {
     "": -1,
