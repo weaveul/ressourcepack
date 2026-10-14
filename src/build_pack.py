@@ -1,7 +1,7 @@
 import json, os, shutil, zipfile, hashlib
 from PIL import Image
 S=12; M=26
-SRC='/tmp/claude-0/sc/rp/out3'; PK='/tmp/claude-0/sc/rp/pack'
+SRC='/tmp/claude-0/sc/rp/out4'; PK='/tmp/claude-0/sc/rp/pack'
 os.makedirs(PK+'/assets/evo/textures/gui',exist_ok=True); os.makedirs(PK+'/assets/minecraft/font',exist_ok=True)
 names=['menu','race','classe','talents','reset','metiers']+['mc_'+k.lower() for k in json.load(open('/tmp/claude-0/sc/mgui/layouts.json'))]+['race_info','classe_info','fiche']
 prov=[]; glyph={}
