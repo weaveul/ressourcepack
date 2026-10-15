@@ -201,13 +201,14 @@ def main():
         font['providers'].insert(len(font['providers']) - 1,
                                  {'type': 'bitmap', 'file': f'evo:hud/{name}.png', 'ascent': ascent, 'height': height, 'chars': [ch]})
         table[name] = f'\\u{0xE200 + i:04X}'
-    # logo officiel (île EVO) : une image, deux glyphes (tablist 48 px vers le bas, scoreboard 36 px vers le haut)
-    logo_img = official_logo()
-    logo_img.save(os.path.join(OUT, 'logo_evo.png'))
-    for j, (name, ascent, height) in enumerate((('logo_tab', 8, 48), ('logo_sb', 30, 36))):
+    # logo officiel (île EVO), discret : 20 px dans la tablist, 13 px dans le titre du scoreboard (images à 2x)
+    base = official_logo()
+    for j, (name, ascent, height) in enumerate((('logo_tab', 15, 20), ('logo_sb', 10, 13))):
+        img = base.resize((round(base.width * height * 2 / base.height), height * 2), Image.LANCZOS)
+        img.save(os.path.join(OUT, name + '.png'))
         ch = chr(0xE200 + len(glyphs) + j)
         font['providers'].insert(len(font['providers']) - 1,
-                                 {'type': 'bitmap', 'file': 'evo:hud/logo_evo.png', 'ascent': ascent, 'height': height, 'chars': [ch]})
+                                 {'type': 'bitmap', 'file': f'evo:hud/{name}.png', 'ascent': ascent, 'height': height, 'chars': [ch]})
         table[name] = f'\\u{ord(ch):04X}'
     json.dump(font, open(FONT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     for k, v in table.items():
