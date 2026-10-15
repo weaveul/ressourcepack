@@ -201,10 +201,11 @@ def main():
         font['providers'].insert(len(font['providers']) - 1,
                                  {'type': 'bitmap', 'file': f'evo:hud/{name}.png', 'ascent': ascent, 'height': height, 'chars': [ch]})
         table[name] = f'\\u{0xE200 + i:04X}'
-    # logo officiel (île EVO), discret : 20 px dans la tablist, 13 px dans le titre du scoreboard (images à 2x)
+    # logo officiel (île EVO), discret : 20 px dans la tablist, 13 px dans le titre du scoreboard.
+    # Images en haute résolution (7x et 8x) pour rester nettes aux grandes échelles d'interface, sous la limite de 256 px.
     base = official_logo()
-    for j, (name, ascent, height) in enumerate((('logo_tab', 15, 20), ('logo_sb', 10, 13))):
-        img = base.resize((round(base.width * height * 2 / base.height), height * 2), Image.LANCZOS)
+    for j, (name, ascent, height, scale) in enumerate((('logo_tab', 15, 20, 7), ('logo_sb', 10, 13, 8))):
+        img = base.resize((round(base.width * height * scale / base.height), height * scale), Image.LANCZOS)
         img.save(os.path.join(OUT, name + '.png'))
         ch = chr(0xE200 + len(glyphs) + j)
         font['providers'].insert(len(font['providers']) - 1,
