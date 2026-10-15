@@ -18,6 +18,7 @@ def menus():
     m['race_info']=(4,[13,27,29,31,33],[13],'parchemin',[])
     m['classe_info']=(6,[13]+list(range(28,35))+list(range(37,44))+[45,53],[13],'armurerie',[])
     m['fiche']=(5,[11,13,15]+list(range(28,35))+[36],[11,13,15],'parchemin',[])
+    m['parametres']=(4,[4,10,11,12,13,14,15,16,21,23,27,31],[],'atelier',[])
     return m
 if __name__=='__main__':
     out=sys.argv[1]

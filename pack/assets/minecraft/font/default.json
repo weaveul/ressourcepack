@@ -263,6 +263,15 @@
   },
   {
    "type": "bitmap",
+   "file": "evo:gui/parametres.png",
+   "ascent": 39,
+   "height": 211,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
    "file": "evo:hud/coin.png",
    "ascent": 7,
    "height": 8,
