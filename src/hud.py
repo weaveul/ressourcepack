@@ -162,7 +162,7 @@ def divider(w, name):
 
 
 def official_logo():
-    """Logo du serveur (src/assets/logo_evo_source.png) sans son halo, 192 px de haut."""
+    """Logo du serveur (src/assets/logo_evo_source.png) sans son halo. Max 256 px de large : au-delà le jeu ne peut pas charger le glyphe."""
     im = Image.open(os.path.join(ROOT, 'src/assets/logo_evo_source.png')).convert('RGBA')
     px = im.load()
     for y in range(im.height):
@@ -170,8 +170,8 @@ def official_logo():
             if px[x, y][3] < 110:
                 px[x, y] = (0, 0, 0, 0)
     im = im.crop(im.getbbox())
-    h = 192
-    return im.resize((round(im.width * h / im.height), h), Image.LANCZOS)
+    w = 240
+    return im.resize((w, round(im.height * w / im.width)), Image.LANCZOS)
 
 
 def main():

@@ -6,7 +6,7 @@ TAL_LINKS=[(c+9*r,c+9*(r+1)) for c in (1,4,7) for r in range(4)]
 MC_THEME={'skilloverview':'atelier','mining':'mine','excavation':'mine','woodcutting':'foret','herbalism':'foret','taming':'foret',
  'fishing':'eau','alchemy':'alchimie','repair':'forge','salvage':'forge','smelting':'forge'}
 def menus():
-    m={'menu':(5,[4,20,22,24,38,40,42,44],[20,22,24],'chateau',[]),
+    m={'menu':(5,[4,20,22,24,37,39,41,43],[20,22,24],'chateau',[]),
        'race':(4,[4,19,21,23,25],[19,21,23,25],'parchemin',[]),
        'classe':(6,[4,20,22,24,38,40,42],[20,22,24,38,40,42],'armurerie',[]),
        'talents':(6,[1,4,7]+[c+9*r for c in (1,4,7) for r in (1,2,3,4)]+[45,49,53],[],'arcane',TAL_LINKS),
