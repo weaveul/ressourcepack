@@ -15,6 +15,9 @@ prov.append({'type':'space','advances':adv})
 json.dump({'providers':prov},open(PK+'/assets/minecraft/font/default.json','w'),ensure_ascii=False,indent=1)
 json.dump({'pack':{'description':'§6Evo Extract §7- menus','pack_format':88,'min_format':88,'max_format':88}},open(PK+'/pack.mcmeta','w'),ensure_ascii=False)
 os.makedirs('/mnt/project-files/resourcepack',exist_ok=True)
+# Assets externes (modèles BetterModel générés par le serveur) ajoutés tels quels
+EXTRA='/mnt/project-files/resourcepack/extra'
+if os.path.isdir(EXTRA): shutil.copytree(EXTRA,PK,dirs_exist_ok=True)
 z='/mnt/project-files/resourcepack/EvoExtract-pack.zip'
 with zipfile.ZipFile(z,'w',zipfile.ZIP_DEFLATED) as f:
     for root,_,files in os.walk(PK):
