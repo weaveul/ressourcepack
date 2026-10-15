@@ -161,6 +161,19 @@ def divider(w, name):
     return img
 
 
+def official_logo():
+    """Logo du serveur (src/assets/logo_evo_source.png) sans son halo, 192 px de haut."""
+    im = Image.open(os.path.join(ROOT, 'src/assets/logo_evo_source.png')).convert('RGBA')
+    px = im.load()
+    for y in range(im.height):
+        for x in range(im.width):
+            if px[x, y][3] < 110:
+                px[x, y] = (0, 0, 0, 0)
+    im = im.crop(im.getbbox())
+    h = 192
+    return im.resize((round(im.width * h / im.height), h), Image.LANCZOS)
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
     glyphs = []  # (nom, image, ascent, height)
@@ -188,6 +201,14 @@ def main():
         font['providers'].insert(len(font['providers']) - 1,
                                  {'type': 'bitmap', 'file': f'evo:hud/{name}.png', 'ascent': ascent, 'height': height, 'chars': [ch]})
         table[name] = f'\\u{0xE200 + i:04X}'
+    # logo officiel (île EVO) : une image, deux glyphes (tablist 48 px vers le bas, scoreboard 36 px vers le haut)
+    logo_img = official_logo()
+    logo_img.save(os.path.join(OUT, 'logo_evo.png'))
+    for j, (name, ascent, height) in enumerate((('logo_tab', 8, 48), ('logo_sb', 30, 36))):
+        ch = chr(0xE200 + len(glyphs) + j)
+        font['providers'].insert(len(font['providers']) - 1,
+                                 {'type': 'bitmap', 'file': 'evo:hud/logo_evo.png', 'ascent': ascent, 'height': height, 'chars': [ch]})
+        table[name] = f'\\u{ord(ch):04X}'
     json.dump(font, open(FONT, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     for k, v in table.items():
         print(k, v)

@@ -415,6 +415,24 @@
    ]
   },
   {
+   "type": "bitmap",
+   "file": "evo:hud/logo_evo.png",
+   "ascent": 8,
+   "height": 48,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/logo_evo.png",
+   "ascent": 30,
+   "height": 36,
+   "chars": [
+    ""
+   ]
+  },
+  {
    "type": "space",
    "advances": {
     "": -1,
