@@ -50,7 +50,81 @@ ICONS = {
     'scroll': ['.oooooo.', 'oPPPPPpo', '.opbbpo.', '.oPPPPo.', '.opbbpo.', '.oPPPPo.', 'oPPPPPpo', '.oooooo.'],
     # étoile (niveau)
     'star': ['...oo...', '...ol...', 'oooglooo', 'olggggdo', '.oggggo.', '.ogddgo.', 'ogo..ogo', 'oo....oo'],
+    # casque (race)
+    'helmet': ['..oRRo..', '.ooRmoo.', 'oSSSSSko', 'oSoooSko', 'oSo.oSko', 'oSo.oSko', 'oko.okko', 'ooo.oooo'],
+    # grimoire (talents)
+    'book': ['.oooooo.', 'oBBBBBWo', 'oBWWBBWo', 'oBBBBBWo', 'oBBWWBWo', 'oBBBBBWo', 'oooooowo', '.oooooo.'],
+    # sablier (heure)
+    'clock': ['oooooooo', '.oPPPPo.', '..oggo..', '...oo...', '...oo...', '..oPPo..', '.oggggo.', 'oooooooo'],
 }
+
+# Police du logo : lettres 5x7 étirées à 10 de haut, en gras, contour sombre et dégradé or.
+LETTERS = {
+    'E': ['#####', '#....', '#....', '####.', '#....', '#....', '#####'],
+    'V': ['#...#', '#...#', '#...#', '#...#', '.#.#.', '.#.#.', '..#..'],
+    'O': ['.###.', '#...#', '#...#', '#...#', '#...#', '#...#', '.###.'],
+    'X': ['#...#', '#...#', '.#.#.', '..#..', '.#.#.', '#...#', '#...#'],
+    'T': ['#####', '..#..', '..#..', '..#..', '..#..', '..#..', '..#..'],
+    'R': ['####.', '#...#', '#...#', '####.', '#.#..', '#..#.', '#...#'],
+    'A': ['.###.', '#...#', '#...#', '#####', '#...#', '#...#', '#...#'],
+    'C': ['.###.', '#...#', '#....', '#....', '#....', '#...#', '.###.'],
+}
+ROWMAP = [0, 1, 1, 2, 3, 3, 4, 5, 5, 6]
+
+
+def logo(text='EVO EXTRACT'):
+    cols = []  # masque binaire colonne par colonne
+    for ch in text:
+        if ch == ' ':
+            cols += [[0] * 10] * 3
+            continue
+        g = LETTERS[ch]
+        for x in range(5):
+            cols.append([1 if g[ROWMAP[y]][x] == '#' else 0 for y in range(10)])
+        cols.append([0] * 10)
+        cols.append([0] * 10)
+    w, h = len(cols) + 4, 10 + 3
+    m = [[0] * w for _ in range(h)]
+    for x, col in enumerate(cols):
+        for y, v in enumerate(col):
+            if v:
+                m[y + 1][x + 1] = 1; m[y + 1][x + 2] = 1  # gras : on double vers la droite
+    img = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    top, mid, bot = (255, 246, 205), (245, 205, 90), (190, 120, 25)
+    for y in range(h):
+        for x in range(w):
+            if m[y][x]:
+                t = (y - 1) / 9
+                c = [int(top[i] + (mid[i] - top[i]) * t * 2) if t < .5 else int(mid[i] + (bot[i] - mid[i]) * (t - .5) * 2) for i in range(3)]
+                img.putpixel((x, y), tuple(c) + (255,))
+            elif any(0 <= y + dy < h and 0 <= x + dx < w and m[y + dy][x + dx] for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
+                img.putpixel((x, y), OUTL + (255,))
+            elif y > 0 and x > 0 and m[y - 1][x - 1]:
+                img.putpixel((x, y), (20, 12, 2, 160))  # ombre portée
+    return img
+
+
+PANEL_W = 150
+FILL, BAR, EDGE = (16, 13, 10, 165), (120, 85, 20, 190), (200, 155, 50, 230)
+
+
+def panel(kind):
+    """Tranche de panneau de 9 px (une ligne de scoreboard) : top = barre de titre, mid, bot = fermeture."""
+    w, h = PANEL_W, 9
+    img = Image.new('RGBA', (w, h), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    if kind == 'top':
+        d.rectangle([1, 0, w - 2, h - 1], fill=BAR)
+        d.line([2, 0, w - 3, 0], fill=EDGE); d.point([(1, 1), (w - 2, 1)], fill=EDGE)
+        d.line([0, 2, 0, h - 1], fill=EDGE); d.line([w - 1, 2, w - 1, h - 1], fill=EDGE)
+    elif kind == 'mid':
+        d.rectangle([1, 0, w - 2, h - 1], fill=FILL)
+        d.line([0, 0, 0, h - 1], fill=EDGE); d.line([w - 1, 0, w - 1, h - 1], fill=EDGE)
+    else:
+        d.rectangle([1, 0, w - 2, 1], fill=FILL)
+        d.line([0, 0, 0, 1], fill=EDGE); d.line([w - 1, 0, w - 1, 1], fill=EDGE)
+        d.point([(1, 2), (w - 2, 2)], fill=EDGE); d.line([2, 3, w - 3, 3], fill=EDGE)
+    return img
 
 EMBLEM = [  # blason : écu rouge bordé d'or, épée dorée
     'ooooooooooo',
@@ -90,11 +164,20 @@ def divider(w, name):
 def main():
     os.makedirs(OUT, exist_ok=True)
     glyphs = []  # (nom, image, ascent, height)
+    late = ('helmet', 'book', 'clock')
     for name, rows in ICONS.items():
-        glyphs.append((name, grid(rows, PAL), 7, 8))
+        if name not in late:
+            glyphs.append((name, grid(rows, PAL), 7, 8))
     glyphs.append(('emblem', grid(EMBLEM, PAL), 8, 10))
     glyphs.append(('divider', divider(181, 'divider'), 2, 5))
     glyphs.append(('divider_short', divider(91, 'divider_short'), 2, 5))
+    # ajouts du scoreboard en panneaux (toujours à la fin pour garder les codes existants)
+    for name in late:
+        glyphs.append((name, grid(ICONS[name], PAL), 7, 8))
+    lg = logo()
+    glyphs.append(('logo', lg, 10, lg.height))
+    for k in ('top', 'mid', 'bot'):
+        glyphs.append(('panel_' + k, panel(k), 8, 9))
 
     font = json.load(open(FONT, encoding='utf-8'))
     font['providers'] = [p for p in font['providers'] if not str(p.get('file', '')).startswith('evo:hud/')]
