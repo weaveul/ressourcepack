@@ -9,7 +9,8 @@ def menus():
     m={'menu':(5,[4,20,22,24,37,39,41,43],[20,22,24],'chateau',[]),
        'race':(4,[4,19,21,23,25],[19,21,23,25],'parchemin',[]),
        'classe':(6,[4,20,22,24,38,40,42],[20,22,24,38,40,42],'armurerie',[]),
-       'talents':(6,[1,4,7]+[c+9*r for c in (1,4,7) for r in (1,2,3,4)]+[45,49,53],[],'arcane',TAL_LINKS),
+       'talents':(6,[1,4,7]+[c+9*r for c in (1,4,7) for r in (1,2,3,4)]+[45,49,51,53],[],'arcane',TAL_LINKS),
+       'attributs':(5,[4]+list(range(10,17))+[36,44],[4],'arcane',[]),
        'reset':(3,[11,15],[11,15],'autel',[]),
        'metiers':(6,[4,45],[],'atelier',[])}
     lj='/tmp/claude-0/sc/mgui/layouts.json'
