@@ -20,6 +20,9 @@ def menus():
     m['classe_info']=(6,[13]+list(range(28,35))+list(range(37,44))+[45,53],[13],'armurerie',[])
     m['fiche']=(5,[11,13,15]+list(range(28,35))+[36],[11,13,15],'parchemin',[])
     m['parametres']=(4,[4,10,11,12,13,14,15,16,21,23,27,31],[],'atelier',[])
+    # PNJ de planque (EvoExtract) : boutique (U+E030) et quêtes (U+E031)
+    m['marchand']=(6,[0,4,8]+[9*r+c for r in (1,2,3,4) for c in range(8)]+[45,49,53],[8],'alchimie',[])
+    m['quetes']=(6,[4,18,20,22,24,36,38,40,42,45,49],[20,22,24,38,40,42],'parchemin',[])
     return m
 if __name__=='__main__':
     out=sys.argv[1]

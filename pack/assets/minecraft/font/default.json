@@ -281,6 +281,24 @@
   },
   {
    "type": "bitmap",
+   "file": "evo:gui/marchand.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:gui/quetes.png",
+   "ascent": 39,
+   "height": 247,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
    "file": "evo:hud/coin.png",
    "ascent": 7,
    "height": 8,
