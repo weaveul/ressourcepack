@@ -156,8 +156,8 @@ SLOTSTY={'bois':(C('2a170d'),C('5b3220'),C('7a4429'),C('432414')),'parchemin':(C
  'pierre':(C('1c1c24'),C('3a3a48'),C('55556a'),C('2a2a34')),'arcane':(C('120e26'),C('2b2050'),C('6a52b0'),C('1d163a'))}
 def slot(d,x,y,sty='bois'):
     o,i,hl,sh=SLOTSTY[sty]
-    rect(d,x-1,y-1,x+16,y+16,o); rect(d,x,y,x+15,y+15,i)
-    d.line([x,y+15,x+15,y+15],fill=hl); d.line([x+15,y,x+15,y+15],fill=hl); d.line([x,y,x+15,y],fill=sh); d.line([x,y,x,y+15],fill=sh)
+    # L'objet occupe x..x+15 : contour sombre autour, liseré clair symétrique pour que l'icône tombe pile au centre.
+    rect(d,x-1,y-1,x+16,y+16,o); rect(d,x,y,x+15,y+15,hl); rect(d,x+1,y+1,x+14,y+14,sh); rect(d,x+2,y+2,x+13,y+13,i)
 def alcove(d,x,y,c=C('8e2a1e'),cd=C('5e1a12'),cl=C('b23a28')):
     x0,y0,x1,y1=x-6,y-8,x+21,y+21
     d.rounded_rectangle([x0-1,y0-1,x1+1,y1+1],radius=7,fill=GOLDD); d.rounded_rectangle([x0,y0,x1,y1],radius=6,fill=c)
