@@ -262,6 +262,186 @@
    ]
   },
   {
+   "type": "bitmap",
+   "file": "evo:gui/parametres.png",
+   "ascent": 39,
+   "height": 211,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/coin.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/sword.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/pin.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/player.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/ping.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/scroll.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/star.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/emblem.png",
+   "ascent": 8,
+   "height": 10,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/divider.png",
+   "ascent": 2,
+   "height": 5,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/divider_short.png",
+   "ascent": 2,
+   "height": 5,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/helmet.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/book.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/clock.png",
+   "ascent": 7,
+   "height": 8,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/logo.png",
+   "ascent": 10,
+   "height": 13,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/panel_top.png",
+   "ascent": 8,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/panel_mid.png",
+   "ascent": 8,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/panel_bot.png",
+   "ascent": 8,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/logo_tab.png",
+   "ascent": 15,
+   "height": 20,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/logo_sb.png",
+   "ascent": 10,
+   "height": 13,
+   "chars": [
+    ""
+   ]
+  },
+  {
    "type": "space",
    "advances": {
     "": -1,
