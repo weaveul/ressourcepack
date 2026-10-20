@@ -134,7 +134,7 @@ def shockwave(n=128, name='shockwave', stops=None):
     save(col, a, name)
 
 
-def magic_circle(n=128, name='circle_fire', stops=FIRE):
+def magic_circle(n=128, name='circle_fire', stops=FIRE, tone=None):
     """Cercle runique : anneaux, runes, étoile à 6 branches ; dessiné en 4x puis réduit (anti-crénelage)."""
     from PIL import ImageDraw
     S = n * 4
@@ -169,7 +169,7 @@ def magic_circle(n=128, name='circle_fire', stops=FIRE):
     halo = np.asarray(m.resize((n, n), Image.LANCZOS).filter(ImageFilter.GaussianBlur(3)), dtype=float) / 255
     r, _ = polar(n)
     a = np.clip(lines + halo * 0.8, 0, 1) * np.clip((1 - r) * 20, 0, 1)
-    col = ramp(0.55 - lines * 0.5 - halo * 0.1, stops)
+    col = ramp(0.55 - lines * 0.5 - halo * 0.1, stops) if tone is None else ramp(tone + (1 - lines) * 0.35, stops)
     save(col, a, name)
 
 
@@ -319,6 +319,111 @@ def anime_core(name, bands, frames=8, n=96, seed=1):
 
 FIRE_BANDS = [(1.0, (140, 22, 14)), (0.93, (232, 66, 20)), (0.74, (255, 146, 32)), (0.52, (255, 218, 80)), (0.3, (255, 253, 232))]
 
+# ---------- style animé : autres éléments ----------
+def cel(heat, bands, aa=10):
+    """aplats nets : bands = [(seuil, couleur), ...] du bord vers le coeur (seuils décroissants)"""
+    n = heat.shape
+    rgb = np.zeros(n + (3,)); a = np.zeros(n)
+    for lim, col in bands:
+        m = heat < lim; rgb[m] = col; a[m] = 1
+    return rgb, a * np.clip((bands[0][0] - heat) * aa, 0, 1)
+
+
+ARCANE_BANDS = [(1.0, (70, 20, 140)), (0.9, (150, 60, 235)), (0.68, (215, 130, 255)), (0.42, (250, 215, 255)), (0.22, (255, 255, 255))]
+FROST_BANDS = [(1.0, (25, 70, 150)), (0.9, (60, 150, 235)), (0.68, (140, 215, 255)), (0.42, (220, 248, 255)), (0.2, (255, 255, 255))]
+STORM_BANDS = [(1.0, (40, 50, 170)), (0.82, (90, 140, 255)), (0.5, (190, 225, 255)), (0.28, (255, 255, 255))]
+
+
+def arcane_orb(frames=6, n=64):
+    """orbe arcanique : boule ronde + 4 pointes d'étoile qui tournent"""
+    r, th = polar(n)
+    for f in range(frames):
+        ph = f / frames * math.pi / 2
+        R = 0.4 + 0.5 * np.abs(np.cos(2 * (th - ph))) ** 10 + 0.2 * np.abs(np.cos(2 * (th - ph) + math.pi / 2)) ** 10
+        heat = r / R + 0.05 * np.sin(th * 3 + r * 12 - f)
+        save(*cel(heat, ARCANE_BANDS), f'arcane_core_{f}')
+
+
+def cel_star(name, bands, n=32, points=4):
+    r, th = polar(n)
+    R = 0.28 + 0.68 * np.abs(np.cos(th * points / 2)) ** 6
+    save(*cel(r / R, bands), name)
+
+
+def cel_burst(name, bands, frames=6, n=96, points=8, seed=0):
+    """éclatement : anneau en étoile qui s'ouvre et s'amincit"""
+    r, th = polar(n)
+    rr = np.random.default_rng(seed); lens = rr.uniform(0.6, 1.0, points)
+    for f in range(frames):
+        t = (f + 1) / frames
+        k = (th / (2 * math.pi) % 1) * points; i = k.astype(int) % points; fr = k - np.floor(k)
+        spike = lens[i] * np.abs(np.sin(fr * math.pi)) ** 4
+        outer = 0.35 + 0.6 * t ** 0.7 + 0.25 * spike * (1 - t * 0.4)
+        inner = outer * (0.2 + 0.75 * t ** 1.2)
+        band = (r - inner) / np.maximum(outer - inner, 1e-3)              # 0 au bord intérieur, 1 au bord extérieur
+        heat = np.where(r < inner, 2.0, np.abs(band - 0.45) * 2.0)
+        rgb, a = cel(heat, bands)
+        save(rgb, a, f'{name}_{f}')
+
+
+def cel_ring(name, bands, n=128):
+    r, _ = polar(n)
+    heat = np.abs(r - 0.82) / 0.1
+    save(*cel(heat, bands, 6), name)
+
+
+def frost_crystal(frames=6, n=64):
+    """cristal de givre : 6 pointes, facettes claires/sombres en aplats"""
+    r, th = polar(n)
+    for f in range(frames):
+        ph = f / frames * math.pi / 3
+        R = 0.32 + 0.62 * np.abs(np.cos(3 * (th - ph))) ** 6
+        facet = (np.floor((th - ph) / (math.pi / 6)) % 2) * 0.16
+        heat = r / R + facet
+        save(*cel(heat, FROST_BANDS), f'frost_core_{f}')
+
+
+def ice_spike(n=64):
+    """pic de glace vertical (à afficher en VERTICAL), sort du sol"""
+    y, x = np.mgrid[0:n, 0:n] + 0.5
+    x = (x - n / 2) / (n / 2); y = (n - y) / n                               # y : 0 en bas, 1 en haut
+    width = 0.42 * (1 - y) ** 0.9
+    heat = np.abs(x) / np.maximum(width, 1e-3)
+    heat = heat + (x > 0.02) * 0.25                                          # face droite plus sombre
+    heat = np.where(y > 0.97, 2, heat)
+    save(*cel(heat, FROST_BANDS), 'ice_spike')
+
+
+def cel_bolt(frames=4, w=128, h=32):
+    """éclair : coeur blanc net, bord bleu net, quelques branches"""
+    from PIL import ImageDraw
+    for f in range(frames):
+        rr = np.random.default_rng(600 + f)
+        S = 4; core = Image.new('L', (w * S, h * S), 0); d = ImageDraw.Draw(core)
+        def path(x0, y0, x1, y1, amp, steps):
+            pts = [(x0, y0)]
+            for i in range(1, steps):
+                k = i / steps
+                pts.append((x0 + (x1 - x0) * k, y0 + (y1 - y0) * k + rr.uniform(-amp, amp)))
+            pts.append((x1, y1)); return pts
+        main = path(0, h * S / 2, w * S, h * S / 2, h * S * 0.3, 12)
+        branches = []
+        for _ in range(3):
+            i = int(rr.integers(2, 10)); x, y = main[i]
+            branches.append(path(x, y, x + rr.uniform(60, 160), y + rr.choice([-1, 1]) * rr.uniform(30, 52), 12, 4))
+        outer = Image.new('L', (w * S, h * S), 0); o = ImageDraw.Draw(outer)
+        o.line(main, fill=255, width=26, joint='curve'); [o.line(b, fill=255, width=14) for b in branches]
+        d.line(main, fill=255, width=9, joint='curve'); [d.line(b, fill=255, width=5) for b in branches]
+        cm = np.asarray(core.resize((w, h), Image.LANCZOS), dtype=float) / 255
+        om = np.asarray(outer.resize((w, h), Image.LANCZOS), dtype=float) / 255
+        rgb = np.zeros((h, w, 3)); rgb[:] = STORM_BANDS[1][1]
+        rgb[cm > 0.5] = (255, 255, 255)
+        rgb[(cm <= 0.5) & (cm > 0.12)] = STORM_BANDS[2][1]
+        a = np.clip(om * 1.6, 0, 1)
+        rgba = np.dstack([rgb, a * 255]).astype(np.uint8); rgba[a < 1 / 255] = 0
+        Image.fromarray(rgba, 'RGBA').save(os.path.join(ROOT, 'textures', 'item', 'vfx', f'bolt_{f}.png'))
+
+
 # ---------- modèles ----------
 def quad_model(tex):
     face = {'uv': [0, 0, 16, 16], 'texture': '#s'}
@@ -346,12 +451,14 @@ if __name__ == '__main__':
     glow('glow_fire', 64, (255, 140, 40))
     glow('smoke', 64, (70, 62, 60), power=1.4, maxa=0.6)
     # arcane (Trait arcanique, Transfert)
-    fire_core(6, 64, 'arcane_core', ARCANE, 700); star('spark_arcane', 32, ARCANE)
-    explosion(6, 96, 'burst_arcane', ARCANE, False, 720); magic_circle(128, 'circle_arcane', ARCANE)
-    shockwave(128, 'shockwave_arcane', ARCANE); glow('glow_arcane', 64, (190, 90, 255))
+    arcane_orb(); cel_star('spark_arcane', ARCANE_BANDS); cel_burst('burst_arcane', ARCANE_BANDS, seed=4)
+    magic_circle(128, 'circle_arcane', ARCANE, 0.22); cel_ring('shockwave_arcane', ARCANE_BANDS); glow('glow_arcane', 64, (190, 90, 255))
     # givre (Éclair de givre, Nova de glace)
-    frost_core(); snowflake(); shards(); magic_circle(128, 'circle_frost', FROST)
-    shockwave(128, 'shockwave_frost', FROST); glow('glow_frost', 64, (120, 200, 255)); glow('mist_frost', 64, (200, 230, 255), 1.4, 0.45)
+    frost_crystal(); snowflake(); shards(); ice_spike(); cel_burst('burst_frost', FROST_BANDS, points=6, seed=9)
+    magic_circle(128, 'circle_frost', FROST, 0.18); cel_ring('shockwave_frost', FROST_BANDS)
+    glow('glow_frost', 64, (120, 200, 255)); glow('mist_frost', 64, (200, 230, 255), 1.4, 0.45)
     # foudre (Chaîne d'éclairs)
-    bolt(); glow('glow_storm', 64, (140, 180, 255)); star('spark_storm', 32, STORM)
+    cel_bolt(); glow('glow_storm', 64, (140, 180, 255)); cel_star('spark_storm', STORM_BANDS)
+    # feu : anneau d'onde en aplats aussi
+    cel_ring('shockwave', FIRE_BANDS)
     print(' '.join(write_models()))
