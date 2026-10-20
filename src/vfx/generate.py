@@ -366,9 +366,9 @@ def cel_burst(name, bands, frames=6, n=96, points=8, seed=0):
         save(rgb, a, f'{name}_{f}')
 
 
-def cel_ring(name, bands, n=128):
+def cel_ring(name, bands, n=128, width=0.1):
     r, _ = polar(n)
-    heat = np.abs(r - 0.82) / 0.1
+    heat = np.abs(r - 0.82) / width
     save(*cel(heat, bands, 6), name)
 
 
@@ -424,6 +424,127 @@ def cel_bolt(frames=4, w=128, h=32):
         Image.fromarray(rgba, 'RGBA').save(os.path.join(ROOT, 'textures', 'item', 'vfx', f'bolt_{f}.png'))
 
 
+
+# ---------- Guerrier : acier, sang, rage, poussière ----------
+STEEL_BANDS = [(1.0, (70, 90, 140)), (0.85, (150, 190, 240)), (0.55, (225, 240, 255)), (0.28, (255, 255, 255))]
+BLOOD_BANDS = [(1.0, (70, 0, 10)), (0.85, (170, 10, 25)), (0.55, (235, 50, 45)), (0.28, (255, 205, 195))]
+RAGE_BANDS = [(1.0, (90, 0, 10)), (0.9, (200, 20, 20)), (0.7, (255, 90, 30)), (0.45, (255, 190, 80)), (0.25, (255, 245, 210))]
+DUST_BANDS = [(1.0, (95, 72, 52)), (0.8, (150, 120, 88)), (0.5, (196, 170, 132)), (0.25, (226, 208, 176))]
+ROCK_BANDS = [(1.0, (45, 40, 36)), (0.85, (95, 86, 78)), (0.5, (138, 126, 114))]
+WIND_BANDS = [(1.0, (150, 190, 230)), (0.7, (225, 240, 255)), (0.35, (255, 255, 255))]
+WAR = [(0, (255, 250, 220)), (0.2, (255, 200, 90)), (0.45, (255, 110, 30)), (0.7, (210, 30, 20)), (0.88, (120, 10, 10)), (1, (50, 5, 5))]
+
+
+def slash(name, bands, frames=6, n=128, span=1.0):
+    """tranchant en croissant : la lame balaie (l'arc s'allonge), puis la traîne s'efface en s'amincissant"""
+    r, th = polar(n)
+    L = [0.7, 1.7, 2.6, 3.0, 3.0, 3.0]          # longueur de l'arc (rad)
+    K = [0.75, 1.0, 1.0, 0.8, 0.55, 0.32]        # épaisseur
+    C = [1.0, 1.0, 1.0, 0.72, 0.5, 0.32]         # part de l'arc encore visible (la queue disparaît)
+    for f in range(frames):
+        s = ((0.6 - th) % (2 * math.pi)) / (L[f] * span)  # 0 à la pointe, 1 au bout de la traîne
+        rc = 0.74 + 0.04 * f / frames
+        w = 0.28 * K[f] * np.sqrt(np.clip(s / 0.07, 0, 1)) * np.clip(1 - s / C[f], 0, 1) ** 0.9
+        heat = np.where((s <= C[f]) & (w > 1e-3), np.abs(r - rc) / np.maximum(w, 1e-3), 2.0)
+        save(*cel(heat, bands, 6), f'{name}_{f}')
+
+
+def cross_slash(name, bands, frames=6, n=128):
+    """deux entailles en X : la première trace, puis la seconde, puis les deux s'amincissent"""
+    y, x = np.mgrid[0:n, 0:n] + 0.5
+    x = (x - n / 2) / (n / 2); y = (y - n / 2) / (n / 2)
+    def stroke(u, d, prog, k):
+        w = 0.13 * k * np.clip(1 - u * u, 0, 1) ** 0.6
+        vis = u <= -1 + 2 * prog
+        return np.where(vis & (w > 1e-3), np.abs(d) / np.maximum(w, 1e-3), 2.0)
+    for f in range(frames):
+        pa = min(1, (f + 1) / 2.5); pb = min(1, max(0, (f - 1.5) / 2)); k = 1.0 if f < 4 else (0.6 if f == 4 else 0.3)
+        h1 = stroke((x + y) / 1.35, (x - y) / 1.414, pa, k)
+        h2 = stroke((x - y) / 1.35, (x + y) / 1.414, pb, k) if pb > 0 else 2.0
+        save(*cel(np.minimum(h1, h2), bands, 6), f'{name}_{f}')
+
+
+def dust(name='dust', n=64, seed=21):
+    r, th = polar(n)
+    R = 0.72 + 0.16 * angular(th, seed, kmin=3, kmax=7)
+    shade = 0.18 * (np.mgrid[0:n, 0:n][0] / n - 0.4)                # bas du nuage plus sombre
+    save(*cel(r / R + shade + 0.08 * (fbm(n, seed) - 0.5), DUST_BANDS), name)
+
+
+def rock(name='rock', n=32, seed=33):
+    r, th = polar(n)
+    R = 0.62 + 0.22 * angular(th, seed, kmin=2, kmax=5)
+    facet = (np.floor((th + 0.4) / (math.pi / 3)) % 2) * 0.22
+    save(*cel(r / R + facet, ROCK_BANDS), name)
+
+
+def cracks(name='cracks', n=128, seed=44):
+    """fissures au sol (vue de dessus) : crevasses sombres bordées de terre claire"""
+    from PIL import ImageDraw
+    rr = np.random.default_rng(seed); S = 4; N = n * S
+    inner = Image.new('L', (N, N), 0); outer = Image.new('L', (N, N), 0)
+    di, do = ImageDraw.Draw(inner), ImageDraw.Draw(outer)
+    def branch(x, y, ang, length, width, depth):
+        pts = [(x, y)]
+        for i in range(6):
+            ang += rr.uniform(-0.45, 0.45); x += math.cos(ang) * length / 6; y += math.sin(ang) * length / 6; pts.append((x, y))
+            if depth < 2 and rr.random() < 0.3:
+                branch(x, y, ang + rr.choice([-1, 1]) * rr.uniform(0.5, 1.0), length * 0.45, width * 0.6, depth + 1)
+        do.line(pts, fill=255, width=int(width * 2.4), joint='curve'); di.line(pts, fill=255, width=int(width), joint='curve')
+    for k in range(9):
+        a = k / 9 * 2 * math.pi + rr.uniform(-0.2, 0.2)
+        branch(N / 2 + math.cos(a) * N * 0.05, N / 2 + math.sin(a) * N * 0.05, a, N * rr.uniform(0.34, 0.45), 18, 0)
+    di.ellipse([N / 2 - N * 0.07, N / 2 - N * 0.07, N / 2 + N * 0.07, N / 2 + N * 0.07], fill=255)
+    do.ellipse([N / 2 - N * 0.12, N / 2 - N * 0.12, N / 2 + N * 0.12, N / 2 + N * 0.12], fill=255)
+    im = np.asarray(inner.resize((n, n), Image.LANCZOS), dtype=float) / 255
+    om = np.asarray(outer.resize((n, n), Image.LANCZOS), dtype=float) / 255
+    rgb = np.zeros((n, n, 3)); rgb[:] = (150, 118, 84)
+    rgb[im > 0.45] = (38, 24, 16)
+    rgb[(im > 0.15) & (im <= 0.45)] = (90, 62, 40)
+    save(rgb, np.clip(om * 1.8, 0, 1), name)
+
+
+def aura(name, bands, frames=8, n=96, seed=5):
+    """aura de rage : contour de flammes autour du corps, centre vide (le joueur reste visible)"""
+    rr = np.random.default_rng(seed)
+    tongues = [(math.pi / 2 + (k - 3.5) * 0.42 + rr.uniform(-0.08, 0.08), rr.uniform(0.25, 0.34),
+                rr.uniform(0.25, 0.42) * (1.15 - abs(k - 3.5) * 0.12), rr.uniform(0, 6.3), rr.choice([1, 2])) for k in range(8)]
+    r, th = polar(n)
+    for f in range(frames):
+        t = f / frames * 2 * math.pi
+        R = 0.52 + 0.03 * np.sin(th * 6 + t)
+        for (a0, w, h, ph, sp) in tongues:
+            hh = h * (0.7 + 0.3 * math.sin(t * sp + ph))
+            ang = th - a0 - 0.3 * math.sin(t + ph) * np.clip(r - 0.5, 0, 1) * 2
+            ang = (ang + math.pi) % (2 * math.pi) - math.pi
+            R = np.maximum(R, 0.52 + hh * np.clip(1 - np.abs(ang) / w, 0, 1) ** 1.3)
+        x = (r / R - 0.66) / 0.34                                   # 0 bord intérieur, 1 bord extérieur
+        heat = np.where(x < 0, 2.0, x * 1.0 + 0.04 * np.sin(th * 9 - t * 2))
+        rgb, a = cel(heat, bands, 8)
+        a = a * np.clip(x * 6, 0, 1)                                 # bord intérieur adouci
+        save(rgb, a, f'{name}_{f}')
+
+
+def blood(name='blood', n=32):
+    y, x = np.mgrid[0:n, 0:n] + 0.5
+    x = (x - n / 2) / (n / 2); y = -(y - n / 2) / (n / 2)
+    circ = np.sqrt(x * x + (y + 0.3) ** 2) / 0.5
+    w = 0.5 * np.clip((0.85 - y) / 1.15, 0, 1) ** 1.3
+    tri = np.where((y > -0.3) & (y < 0.85), np.abs(x) / np.maximum(w, 1e-3), 2.0)
+    heat = np.minimum(circ, tri) + (x > 0.08) * 0.2
+    save(*cel(heat, BLOOD_BANDS), name)
+
+
+def speed_line(name='speed_line', w=128, h=16):
+    y, x = np.mgrid[0:h, 0:w] + 0.5
+    u = x / w; v = (y - h / 2) / (h / 2)
+    width = 0.9 * np.sqrt(u) * (1 - u ** 10)
+    heat = np.abs(v) / np.maximum(width, 1e-3)
+    rgb, a = cel(heat, WIND_BANDS, 4)
+    rgba = np.dstack([rgb, a * 255]).astype(np.uint8); rgba[a < 1 / 255] = 0
+    Image.fromarray(rgba, 'RGBA').resize((w, w // 8)).save(os.path.join(ROOT, 'textures', 'item', 'vfx', name + '.png'))
+
+
 # ---------- modèles ----------
 def quad_model(tex):
     face = {'uv': [0, 0, 16, 16], 'texture': '#s'}
@@ -461,4 +582,10 @@ if __name__ == '__main__':
     cel_bolt(); glow('glow_storm', 64, (140, 180, 255)); cel_star('spark_storm', STORM_BANDS)
     # feu : anneau d'onde en aplats aussi
     cel_ring('shockwave', FIRE_BANDS)
+    # guerrier
+    slash('slash', STEEL_BANDS); slash('whirl', STEEL_BANDS, span=1.7); slash('slash_red', BLOOD_BANDS); cross_slash('cross_red', BLOOD_BANDS)
+    cel_star('spark_steel', STEEL_BANDS); cel_burst('burst_red', BLOOD_BANDS, points=7, seed=12)
+    dust(); rock(); cracks(); cel_ring('shockwave_dust', DUST_BANDS); cel_ring('ring_wind', WIND_BANDS); speed_line()
+    aura('aura_rage', RAGE_BANDS); blood(); cel_ring('roar_ring', RAGE_BANDS); cel_ring('roar_ring_thin', RAGE_BANDS, 256, 0.035); magic_circle(128, 'circle_war', WAR, 0.2)
+    glow('glow_red', 64, (255, 60, 40))
     print(' '.join(write_models()))
