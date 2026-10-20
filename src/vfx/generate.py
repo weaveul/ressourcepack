@@ -176,6 +176,9 @@ def magic_circle(n=128, name='circle_fire', stops=FIRE, tone=None):
 ARCANE = [(0, (255, 245, 255)), (0.2, (245, 180, 255)), (0.45, (190, 90, 255)), (0.7, (110, 40, 210)), (0.88, (60, 20, 130)), (1, (25, 8, 60))]
 FROST = [(0, (255, 255, 255)), (0.2, (210, 245, 255)), (0.45, (120, 210, 255)), (0.7, (50, 140, 230)), (0.88, (25, 70, 160)), (1, (10, 25, 70))]
 STORM = [(0, (255, 255, 255)), (0.25, (220, 240, 255)), (0.5, (130, 190, 255)), (0.75, (70, 110, 255)), (1, (30, 30, 120))]
+NATURE = [(0, (250, 255, 230)), (0.2, (200, 245, 150)), (0.45, (110, 210, 80)), (0.7, (45, 150, 50)), (0.88, (20, 90, 30)), (1, (8, 40, 12))]
+HOLY = [(0, (255, 255, 245)), (0.2, (255, 245, 190)), (0.45, (255, 215, 90)), (0.7, (230, 160, 30)), (0.88, (160, 95, 10)), (1, (70, 40, 5))]
+VOID = [(0, (240, 220, 255)), (0.2, (170, 110, 230)), (0.45, (95, 40, 170)), (0.7, (45, 15, 95)), (0.88, (20, 5, 45)), (1, (5, 0, 15))]
 
 
 def star(name, n, stops, points=4, sharp=3.0):
@@ -332,6 +335,10 @@ def cel(heat, bands, aa=10):
 ARCANE_BANDS = [(1.0, (70, 20, 140)), (0.9, (150, 60, 235)), (0.68, (215, 130, 255)), (0.42, (250, 215, 255)), (0.22, (255, 255, 255))]
 FROST_BANDS = [(1.0, (25, 70, 150)), (0.9, (60, 150, 235)), (0.68, (140, 215, 255)), (0.42, (220, 248, 255)), (0.2, (255, 255, 255))]
 STORM_BANDS = [(1.0, (40, 50, 170)), (0.82, (90, 140, 255)), (0.5, (190, 225, 255)), (0.28, (255, 255, 255))]
+NATURE_BANDS = [(1.0, (20, 80, 25)), (0.9, (50, 160, 45)), (0.68, (130, 220, 80)), (0.42, (220, 250, 170)), (0.22, (255, 255, 235))]
+HOLY_BANDS = [(1.0, (150, 90, 10)), (0.9, (235, 170, 40)), (0.68, (255, 220, 100)), (0.42, (255, 248, 200)), (0.22, (255, 255, 255))]
+VOID_BANDS = [(1.0, (10, 0, 25)), (0.9, (50, 10, 100)), (0.68, (110, 40, 190)), (0.42, (190, 130, 255)), (0.22, (245, 225, 255))]
+POISON_BANDS = [(1.0, (40, 70, 10)), (0.85, (110, 170, 20)), (0.55, (190, 235, 60)), (0.28, (245, 255, 190))]
 
 
 def arcane_orb(frames=6, n=64):
@@ -588,4 +595,19 @@ if __name__ == '__main__':
     dust(); rock(); cracks(); cel_ring('shockwave_dust', DUST_BANDS); cel_ring('ring_wind', WIND_BANDS); speed_line()
     aura('aura_rage', RAGE_BANDS); blood(); cel_ring('roar_ring', RAGE_BANDS); cel_ring('roar_ring_thin', RAGE_BANDS, 256, 0.035); magic_circle(128, 'circle_war', WAR, 0.2)
     glow('glow_red', 64, (255, 60, 40))
+    # druide (nature)
+    anime_core('nature_core', NATURE_BANDS, 6, 64, 7); cel_star('spark_nature', NATURE_BANDS); cel_burst('burst_nature', NATURE_BANDS, points=6, seed=21)
+    magic_circle(128, 'circle_nature', NATURE, 0.2); cel_ring('shockwave_nature', NATURE_BANDS); glow('glow_nature', 64, (110, 230, 90))
+    cel_star('leaf', NATURE_BANDS, 32, 2); glow('spore', 32, (230, 240, 120), 1.6, 0.8); aura('aura_nature', NATURE_BANDS, seed=8)
+    cel_star('spark_poison', POISON_BANDS); glow('mist_poison', 64, (150, 200, 60), 1.4, 0.45)
+    # paladin (lumière sacrée)
+    anime_core('holy_core', HOLY_BANDS, 6, 64, 9); cel_star('spark_holy', HOLY_BANDS); cel_burst('burst_holy', HOLY_BANDS, points=8, seed=31)
+    magic_circle(128, 'circle_holy', HOLY, 0.18); cel_ring('shockwave_holy', HOLY_BANDS); glow('glow_holy', 64, (255, 225, 120))
+    slash('slash_holy', HOLY_BANDS); aura('aura_holy', HOLY_BANDS, seed=11); cel_star('feather', HOLY_BANDS, 32, 2)
+    # abîme (lame runique, singularité)
+    anime_core('void_core', VOID_BANDS, 6, 64, 13); cel_burst('burst_void', VOID_BANDS, points=7, seed=41); glow('glow_void', 64, (120, 40, 200))
+    cel_ring('shockwave_void', VOID_BANDS); magic_circle(128, 'circle_void', VOID, 0.25); cel_star('spark_void', VOID_BANDS)
+    # lames élémentaires
+    slash('slash_fire', FIRE_BANDS); slash('slash_arcane', ARCANE_BANDS); slash('whirl_arcane', ARCANE_BANDS, span=1.7)
+    aura('aura_storm', STORM_BANDS, seed=15); aura('aura_arcane', ARCANE_BANDS, seed=17)
     print(' '.join(write_models()))
