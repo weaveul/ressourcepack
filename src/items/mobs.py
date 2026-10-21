@@ -19,6 +19,9 @@ MATS.update({
     'wax': Mat((236, 226, 196), 6, 0.9),
     'flame': Mat((255, 196, 80), 6, 1.0, light=15),
     'glass': Mat((200, 228, 240), 4, 0.95),
+    'lit_glass': Mat((255, 190, 90), 6, 1.0, light=15, pattern=lambda c, p, face, px, py, w, hgt: (
+        (255, 246, 200) if abs(px - (w - 1) / 2) <= w * 0.18 and hgt * 0.35 <= py <= hgt * 0.75
+        else (255, 214, 120) if abs(px - (w - 1) / 2) <= w * 0.34 and hgt * 0.15 <= py <= hgt * 0.9 else c)),
     'plank': Mat((150, 108, 64), 8, 0.85, pattern=grain),
     'plank_dark': Mat((98, 66, 40), 8, 0.85, pattern=grain),
     'cushion': Mat((140, 36, 40), 8, 0.85),
@@ -271,7 +274,8 @@ def meuble_lanterne():
     """Lanterne de fer forgé à bougie, qui éclaire."""
     it = furniture('meuble_lanterne')
     it.box((4.5, 0, 4.5), (11.5, 1.2, 11.5), 'forge_iron')
-    it.box((5, 1.2, 5), (11, 9.6, 11), 'glass', faces={'up': 'forge_iron', 'down': 'forge_iron'})
+    # vitres éclairées par la bougie (opaques : le rendu d'objet ne gère pas la transparence partielle ici)
+    it.box((5, 1.2, 5), (11, 9.6, 11), 'lit_glass', faces={'up': 'forge_iron', 'down': 'forge_iron'})
     for x in (4.6, 10.6):
         for z in (4.6, 10.6):
             it.box((x, 1.2, z), (x + 0.8, 9.6, z + 0.8), 'forge_iron')

@@ -59,6 +59,9 @@ meuble_lanterne:
       type: DISPLAY_ENTITY
       properties:
         display_transform: NONE
+        brightness: # toujours éclairée, même la nuit
+          block_light: 15
+          sky_light: 15
       hitboxes:
         - 0,0,0 0.5,0.9
       limited_placing:
