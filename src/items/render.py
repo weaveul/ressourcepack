@@ -33,7 +33,7 @@ def render(img, elements, display, size=256, view='gui'):
     light = [v / ln for v in light]
     for e in elements:
         rz = e.get('rotation')
-        Rz = rot('z', rz['angle']) if rz else None
+        Rz = rot(rz.get('axis', 'z'), rz['angle']) if rz else None
 
         def tf(p):
             p = list(p)

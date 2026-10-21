@@ -4,12 +4,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 from PIL import Image, ImageDraw
 from catalog import ALL
 from mobs import MOB_WEAPONS, FURNITURE_ITEMS
-from meubles import STYLE_ITEMS, oraxen_meubles
+from meubles import STYLE_ITEMS, OPEN_ITEMS, oraxen_meubles
 from render import render
 
 CELL = 160
 tiles = []
-for fn in ALL + MOB_WEAPONS + FURNITURE_ITEMS + STYLE_ITEMS:
+for fn in ALL + MOB_WEAPONS + FURNITURE_ITEMS + STYLE_ITEMS + OPEN_ITEMS:
     it = fn()
     out = it.save(getattr(it, 'variants', None))
     for suffix, (name, img, elements, display) in out.items():

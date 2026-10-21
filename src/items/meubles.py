@@ -620,7 +620,37 @@ def fitted(fn):
     return make
 
 
+# Couvercle des coffres : hauteur de la charnière (le couvercle pivote autour de l'arête arrière, côté z haut).
+LIDS = {'elfe_coffre': 8, 'nain_coffre': 9, 'sorcier_coffre': 8, 'orc_coffre': 8}
+
+
+def opened(fn, lid_y, angle, suffix):
+    """Variante du coffre au couvercle soulevé de angle degrés (images de l'animation d'ouverture Oraxen)."""
+    def make():
+        it = fitted(fn)()
+        it.id += suffix
+        els = []
+        for e in it.els:
+            if e['from'][1] < lid_y < e['to'][1]:
+                low, high = dict(e), dict(e)
+                low['to'] = [e['to'][0], lid_y, e['to'][2]]
+                high['from'] = [e['from'][0], lid_y, e['from'][2]]
+                els += [low, high]
+            else:
+                els.append(e)
+        lid = [e for e in els if e['from'][1] >= lid_y]
+        back = max(e['to'][2] for e in lid)
+        for e in lid:
+            e['rot'] = {'angle': angle, 'axis': 'x', 'origin': [8, lid_y, back]}
+        it.els = els
+        return it
+    make.__name__ = fn.__name__ + suffix
+    return make
+
+
 STYLE_ITEMS = [fitted(fn) for _, (_, _, fns) in STYLES.items() for fn in fns]
+_by_name = {fn.__name__: fn for _, (_, _, fns) in STYLES.items() for fn in fns}
+OPEN_ITEMS = [opened(_by_name[k], y, a, s) for k, y in LIDS.items() for a, s in ((22.5, '_ouvert1'), (45, '_ouvert'))]
 
 # nom affiché, type (pour le comportement Oraxen), hauteur d'assise en px
 NAMES = {
@@ -675,6 +705,10 @@ def oraxen_meubles():
             if iid.endswith(('_coffre', '_armoire')):
                 rows = 3 if iid.endswith('_coffre') else 6
                 out += ['      storage:', '        type: STORAGE', f'        rows: {rows}', f'        title: "{name}"']
+                if iid in LIDS:
+                    # images de l'animation, jouées par le correctif Oraxen « model: » (StorageMechanic)
+                    out += [f'        open_animation: "model:evo:{iid}_ouvert1,evo:{iid}_ouvert"',
+                            f'        close_animation: "model:evo:{iid}_ouvert1,evo:{iid}"']
             out += ['      drop:', '        silktouch: false', '        loots:',
                     f'          - {{ oraxen_item: {iid}, probability: 1.0 }}', '']
     path = os.path.join(HERE, 'oraxen', 'items', 'evo_meubles_styles.yml')

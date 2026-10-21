@@ -251,7 +251,9 @@ class Item:
                 s = 16 / W
                 faces[f] = {'uv': [X * s, Y * s, (X + w) * s, (Y + hh) * s], 'texture': '#0'}
             el = {'from': e['from'], 'to': e['to'], 'faces': faces}
-            if self.tilt:
+            if e.get('rot'):
+                el['rotation'] = e['rot']
+            elif self.tilt:
                 el['rotation'] = {'angle': self.tilt, 'axis': 'z', 'origin': [8, 8, 8]}
             lv = e['light'] if e['light'] is not None else light
             if lv:

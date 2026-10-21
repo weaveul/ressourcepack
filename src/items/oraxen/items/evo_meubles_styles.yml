@@ -150,6 +150,8 @@ elfe_coffre:
         type: STORAGE
         rows: 3
         title: "Coffret elfique"
+        open_animation: "model:evo:elfe_coffre_ouvert1,evo:elfe_coffre_ouvert"
+        close_animation: "model:evo:elfe_coffre_ouvert1,evo:elfe_coffre"
       drop:
         silktouch: false
         loots:
@@ -330,6 +332,8 @@ nain_coffre:
         type: STORAGE
         rows: 3
         title: "Coffre cerclé"
+        open_animation: "model:evo:nain_coffre_ouvert1,evo:nain_coffre_ouvert"
+        close_animation: "model:evo:nain_coffre_ouvert1,evo:nain_coffre"
       drop:
         silktouch: false
         loots:
@@ -506,6 +510,8 @@ sorcier_coffre:
         type: STORAGE
         rows: 3
         title: "Malle du sorcier"
+        open_animation: "model:evo:sorcier_coffre_ouvert1,evo:sorcier_coffre_ouvert"
+        close_animation: "model:evo:sorcier_coffre_ouvert1,evo:sorcier_coffre"
       drop:
         silktouch: false
         loots:
@@ -687,6 +693,8 @@ orc_coffre:
         type: STORAGE
         rows: 3
         title: "Coffre de butin"
+        open_animation: "model:evo:orc_coffre_ouvert1,evo:orc_coffre_ouvert"
+        close_animation: "model:evo:orc_coffre_ouvert1,evo:orc_coffre"
       drop:
         silktouch: false
         loots:
