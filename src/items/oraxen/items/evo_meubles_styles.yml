@@ -92,6 +92,10 @@ elfe_armoire:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 6
+        title: "Armoire elfique"
       drop:
         silktouch: false
         loots:
@@ -142,6 +146,10 @@ elfe_coffre:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 3
+        title: "Coffret elfique"
       drop:
         silktouch: false
         loots:
@@ -265,6 +273,10 @@ nain_armoire:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 6
+        title: "Armoire de forge"
       drop:
         silktouch: false
         loots:
@@ -314,6 +326,10 @@ nain_coffre:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 3
+        title: "Coffre cerclé"
       drop:
         silktouch: false
         loots:
@@ -432,6 +448,10 @@ sorcier_armoire:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 6
+        title: "Bibliothèque d'arcanes"
       drop:
         silktouch: false
         loots:
@@ -482,6 +502,10 @@ sorcier_coffre:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 3
+        title: "Malle du sorcier"
       drop:
         silktouch: false
         loots:
@@ -605,6 +629,10 @@ orc_armoire:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 6
+        title: "Râtelier d'armes"
       drop:
         silktouch: false
         loots:
@@ -655,6 +683,10 @@ orc_coffre:
         roof: false
         floor: true
         wall: false
+      storage:
+        type: STORAGE
+        rows: 3
+        title: "Coffre de butin"
       drop:
         silktouch: false
         loots:

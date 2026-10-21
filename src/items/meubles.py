@@ -650,6 +650,9 @@ def oraxen_meubles():
                 out += ['      seats:', f'        - 0,{seat(7.0)},0']
             if kind.startswith('lamp'):
                 out += ['      lights:', '        - 0,1,0 13' if kind == 'lamp_solid' else '        - 0,0,0 13']
+            if iid.endswith(('_coffre', '_armoire')):
+                rows = 3 if iid.endswith('_coffre') else 6
+                out += ['      storage:', '        type: STORAGE', f'        rows: {rows}', f'        title: "{name}"']
             out += ['      drop:', '        silktouch: false', '        loots:',
                     f'          - {{ oraxen_item: {iid}, probability: 1.0 }}', '']
     path = os.path.join(HERE, 'oraxen', 'items', 'evo_meubles_styles.yml')
