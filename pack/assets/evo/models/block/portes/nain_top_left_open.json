@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left_open",
+  "textures": {
+    "bottom": "evo:block/portes/nain_bottom",
+    "top": "evo:block/portes/nain_top"
+  }
+}

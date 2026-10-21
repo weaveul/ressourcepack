@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_right",
+  "textures": {
+    "bottom": "evo:block/portes/elfe_bottom",
+    "top": "evo:block/portes/elfe_top"
+  }
+}

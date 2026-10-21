@@ -4,11 +4,12 @@ sys.path.insert(0, os.path.dirname(__file__))
 from PIL import Image, ImageDraw
 from catalog import ALL
 from mobs import MOB_WEAPONS, FURNITURE_ITEMS
+from meubles import STYLE_ITEMS, oraxen_meubles
 from render import render
 
 CELL = 160
 tiles = []
-for fn in ALL + MOB_WEAPONS + FURNITURE_ITEMS:
+for fn in ALL + MOB_WEAPONS + FURNITURE_ITEMS + STYLE_ITEMS:
     it = fn()
     out = it.save(getattr(it, 'variants', None))
     for suffix, (name, img, elements, display) in out.items():
@@ -26,3 +27,4 @@ for i, (name, im) in enumerate(tiles):
     d.text((x + 6, y + CELL - 2), name, fill=(230, 230, 230, 255))
 sheet.save(os.path.join(os.path.dirname(__file__), 'apercu.png'))
 print(len(tiles), 'modèles')
+print('oraxen :', oraxen_meubles())

@@ -1,0 +1,685 @@
+# Généré par src/items/meubles.py (dépôt ressourcepack). Ne pas éditer à la main.
+# Meubles de style, modèles evo:<id> ; même réglage que evo_meubles.yml (entité d'affichage sans transformation).
+
+elfe_chaise:
+  itemname: "<#9ad18a>Chaise sylvestre"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Elfe"
+  components:
+    item_model: evo:elfe_chaise
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.32,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: elfe_chaise, probability: 1.0 }
+
+elfe_table:
+  itemname: "<#9ad18a>Table de lune"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Elfe"
+  components:
+    item_model: evo:elfe_table
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: elfe_table, probability: 1.0 }
+
+elfe_lit:
+  itemname: "<#9ad18a>Lit de feuillage"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Elfe"
+  components:
+    item_model: evo:elfe_lit
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - z: -1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.44,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: elfe_lit, probability: 1.0 }
+
+elfe_armoire:
+  itemname: "<#9ad18a>Armoire elfique"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Elfe"
+  components:
+    item_model: evo:elfe_armoire
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - y: 1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: elfe_armoire, probability: 1.0 }
+
+elfe_lampe:
+  itemname: "<#9ad18a>Lampe-arbre"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Elfe"
+  components:
+    item_model: evo:elfe_lampe
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+        brightness:
+          block_light: 15
+          sky_light: 15
+      hitboxes:
+        - 0,0,0 0.6,1.0
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      lights:
+        - 0,0,0 13
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: elfe_lampe, probability: 1.0 }
+
+elfe_coffre:
+  itemname: "<#9ad18a>Coffret elfique"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Elfe"
+  components:
+    item_model: evo:elfe_coffre
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: elfe_coffre, probability: 1.0 }
+
+elfe_vasque:
+  itemname: "<#9ad18a>Vasque lunaire"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Elfe"
+  components:
+    item_model: evo:elfe_vasque
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+        brightness:
+          block_light: 15
+          sky_light: 15
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      lights:
+        - 0,1,0 13
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: elfe_vasque, probability: 1.0 }
+
+nain_chaise:
+  itemname: "<#e0a84a>Siège du clan"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Nain"
+  components:
+    item_model: evo:nain_chaise
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.3,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: nain_chaise, probability: 1.0 }
+
+nain_table:
+  itemname: "<#e0a84a>Table de pierre"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Nain"
+  components:
+    item_model: evo:nain_table
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: nain_table, probability: 1.0 }
+
+nain_lit:
+  itemname: "<#e0a84a>Couche de fourrure"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Nain"
+  components:
+    item_model: evo:nain_lit
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - z: -1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.44,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: nain_lit, probability: 1.0 }
+
+nain_armoire:
+  itemname: "<#e0a84a>Armoire de forge"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Nain"
+  components:
+    item_model: evo:nain_armoire
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - y: 1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: nain_armoire, probability: 1.0 }
+
+nain_lampe:
+  itemname: "<#e0a84a>Brasero naine"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Nain"
+  components:
+    item_model: evo:nain_lampe
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+        brightness:
+          block_light: 15
+          sky_light: 15
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      lights:
+        - 0,1,0 13
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: nain_lampe, probability: 1.0 }
+
+nain_coffre:
+  itemname: "<#e0a84a>Coffre cerclé"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Nain"
+  components:
+    item_model: evo:nain_coffre
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: nain_coffre, probability: 1.0 }
+
+nain_enclume:
+  itemname: "<#e0a84a>Enclume runique"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Nain"
+  components:
+    item_model: evo:nain_enclume
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: nain_enclume, probability: 1.0 }
+
+sorcier_chaise:
+  itemname: "<#a98cff>Fauteuil arcanique"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Sorcier"
+  components:
+    item_model: evo:sorcier_chaise
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.29,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: sorcier_chaise, probability: 1.0 }
+
+sorcier_table:
+  itemname: "<#a98cff>Pupitre à grimoire"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Sorcier"
+  components:
+    item_model: evo:sorcier_table
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: sorcier_table, probability: 1.0 }
+
+sorcier_lit:
+  itemname: "<#a98cff>Lit à baldaquin étoilé"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Sorcier"
+  components:
+    item_model: evo:sorcier_lit
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - z: -1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.44,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: sorcier_lit, probability: 1.0 }
+
+sorcier_armoire:
+  itemname: "<#a98cff>Bibliothèque d'arcanes"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Sorcier"
+  components:
+    item_model: evo:sorcier_armoire
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - y: 1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: sorcier_armoire, probability: 1.0 }
+
+sorcier_lampe:
+  itemname: "<#a98cff>Orbe flottant"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Sorcier"
+  components:
+    item_model: evo:sorcier_lampe
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+        brightness:
+          block_light: 15
+          sky_light: 15
+      hitboxes:
+        - 0,0,0 0.6,1.0
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      lights:
+        - 0,0,0 13
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: sorcier_lampe, probability: 1.0 }
+
+sorcier_coffre:
+  itemname: "<#a98cff>Malle du sorcier"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Sorcier"
+  components:
+    item_model: evo:sorcier_coffre
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: sorcier_coffre, probability: 1.0 }
+
+sorcier_chaudron:
+  itemname: "<#a98cff>Chaudron bouillonnant"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Sorcier"
+  components:
+    item_model: evo:sorcier_chaudron
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+        brightness:
+          block_light: 15
+          sky_light: 15
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      lights:
+        - 0,1,0 13
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: sorcier_chaudron, probability: 1.0 }
+
+orc_chaise:
+  itemname: "<#d0584a>Trône de rondins"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Orc"
+  components:
+    item_model: evo:orc_chaise
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.31,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: orc_chaise, probability: 1.0 }
+
+orc_table:
+  itemname: "<#d0584a>Table de festin"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Orc"
+  components:
+    item_model: evo:orc_table
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: orc_table, probability: 1.0 }
+
+orc_lit:
+  itemname: "<#d0584a>Couche de peaux"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Orc"
+  components:
+    item_model: evo:orc_lit
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - z: -1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.44,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: orc_lit, probability: 1.0 }
+
+orc_armoire:
+  itemname: "<#d0584a>Râtelier d'armes"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Orc"
+  components:
+    item_model: evo:orc_armoire
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - y: 1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: orc_armoire, probability: 1.0 }
+
+orc_lampe:
+  itemname: "<#d0584a>Torchère à crâne"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Orc"
+  components:
+    item_model: evo:orc_lampe
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+        brightness:
+          block_light: 15
+          sky_light: 15
+      hitboxes:
+        - 0,0,0 0.6,1.0
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      lights:
+        - 0,0,0 13
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: orc_lampe, probability: 1.0 }
+
+orc_coffre:
+  itemname: "<#d0584a>Coffre de butin"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Orc"
+  components:
+    item_model: evo:orc_coffre
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: orc_coffre, probability: 1.0 }
+
+orc_trophee:
+  itemname: "<#d0584a>Totem de guerre"
+  material: PAPER
+  lore:
+    - "<gray>Style : <white>Orc"
+  components:
+    item_model: evo:orc_trophee
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barriers:
+        - origin
+        - y: 1
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: orc_trophee, probability: 1.0 }
