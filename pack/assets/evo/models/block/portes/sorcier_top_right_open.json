@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_right_open",
-  "textures": {
-    "bottom": "evo:block/portes/sorcier_bottom",
-    "top": "evo:block/portes/sorcier_top"
-  }
-}
