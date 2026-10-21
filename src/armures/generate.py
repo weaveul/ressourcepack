@@ -98,23 +98,23 @@ def motif(t, kind, face, px, py, w, hh, r0, r1):
                 if py >= 1 and (px == 1 or px == 6) and py <= 7:
                     return t.trim
                 return mix(c, t.dark, 0.2)
+            # casques ouverts : yeux, nez et bouche du joueur restent visibles
+            if 1 <= px <= 6 and 3 <= py <= 7:
+                return None
             if k == 'paladin':
-                # fente en croix
-                if (py == 3 and 1 <= px <= 6) or (px in (3, 4) and 2 <= py <= 6):
-                    return (20, 20, 26)
-            elif k == 'guerrier':
-                if (py == 3 and 1 <= px <= 6) or (px in (3, 4) and 3 <= py <= 5):
-                    return (16, 16, 18)
-                if px in (3, 4) and py in (6, 7):
+                if py == 2:
                     return t.trim
+                if px in (3, 4) and py == 1:
+                    return t.accent
+            elif k == 'guerrier':
+                if py == 2:
+                    return t.trim
+                if px in (0, 7) and py >= 3:
+                    return mix(c, t.dark, 0.35)
             elif k == 'lamerunique':
-                if py == 3 and 1 <= px <= 6:
-                    return t.glow + (255,)
-                if px in (3, 4) and py in (5, 6):
+                if py == 2 and 1 <= px <= 6:
                     return t.glow + (255,)
             elif k == 'druide':
-                if 2 <= px <= 5 and 3 <= py <= 6:
-                    return None
                 if py <= 1 and px % 2 == 0:
                     return t.accent
             if py == 0:
