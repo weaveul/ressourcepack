@@ -1,0 +1,575 @@
+# Généré par src/armures/generate.py (dépôt ressourcepack). Ne pas éditer à la main.
+
+guerrier_helmet:
+  itemname: "<#c9483f>Heaume du Rempart de fer"
+  material: PAPER
+  lore:
+    - "<gray>Acier martelé, taillé pour encaisser."
+    - ""
+    - "<dark_gray>Classe : <yellow>Guerrier"
+    - "<dark_gray>Panoplie : <white>Rempart de fer"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 289
+    equippable:
+      slot: HEAD
+      model: oraxen:guerrier
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 3, operation: 0, slot: HEAD }
+    - { attribute: ARMOR_TOUGHNESS, amount: 2, operation: 0, slot: HEAD }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/guerrier_helmet
+
+guerrier_chestplate:
+  itemname: "<#c9483f>Cuirasse du Rempart de fer"
+  material: PAPER
+  lore:
+    - "<gray>Acier martelé, taillé pour encaisser."
+    - ""
+    - "<dark_gray>Classe : <yellow>Guerrier"
+    - "<dark_gray>Panoplie : <white>Rempart de fer"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 420
+    equippable:
+      slot: CHEST
+      model: oraxen:guerrier
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 8, operation: 0, slot: CHEST }
+    - { attribute: ARMOR_TOUGHNESS, amount: 2, operation: 0, slot: CHEST }
+    - { attribute: KNOCKBACK_RESISTANCE, amount: 0.1, operation: 0, slot: CHEST }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/guerrier_chestplate
+
+guerrier_leggings:
+  itemname: "<#c9483f>Jambières du Rempart de fer"
+  material: PAPER
+  lore:
+    - "<gray>Acier martelé, taillé pour encaisser."
+    - ""
+    - "<dark_gray>Classe : <yellow>Guerrier"
+    - "<dark_gray>Panoplie : <white>Rempart de fer"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 394
+    equippable:
+      slot: LEGS
+      model: oraxen:guerrier
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 6, operation: 0, slot: LEGS }
+    - { attribute: ARMOR_TOUGHNESS, amount: 2, operation: 0, slot: LEGS }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/guerrier_leggings
+
+guerrier_boots:
+  itemname: "<#c9483f>Solerets du Rempart de fer"
+  material: PAPER
+  lore:
+    - "<gray>Acier martelé, taillé pour encaisser."
+    - ""
+    - "<dark_gray>Classe : <yellow>Guerrier"
+    - "<dark_gray>Panoplie : <white>Rempart de fer"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 340
+    equippable:
+      slot: FEET
+      model: oraxen:guerrier
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 3, operation: 0, slot: FEET }
+    - { attribute: ARMOR_TOUGHNESS, amount: 2, operation: 0, slot: FEET }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/guerrier_boots
+
+paladin_helmet:
+  itemname: "<#f0c850>Heaume de l'Aube sacrée"
+  material: PAPER
+  lore:
+    - "<gray>Argent béni, liseré d'or."
+    - ""
+    - "<dark_gray>Classe : <yellow>Paladin"
+    - "<dark_gray>Panoplie : <white>Aube sacrée"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 276
+    equippable:
+      slot: HEAD
+      model: oraxen:paladin
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 3, operation: 0, slot: HEAD }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: HEAD }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/paladin_helmet
+
+paladin_chestplate:
+  itemname: "<#f0c850>Cuirasse de l'Aube sacrée"
+  material: PAPER
+  lore:
+    - "<gray>Argent béni, liseré d'or."
+    - ""
+    - "<dark_gray>Classe : <yellow>Paladin"
+    - "<dark_gray>Panoplie : <white>Aube sacrée"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 400
+    equippable:
+      slot: CHEST
+      model: oraxen:paladin
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 7, operation: 0, slot: CHEST }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: CHEST }
+    - { attribute: MAX_HEALTH, amount: 2, operation: 0, slot: CHEST }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/paladin_chestplate
+
+paladin_leggings:
+  itemname: "<#f0c850>Jambières de l'Aube sacrée"
+  material: PAPER
+  lore:
+    - "<gray>Argent béni, liseré d'or."
+    - ""
+    - "<dark_gray>Classe : <yellow>Paladin"
+    - "<dark_gray>Panoplie : <white>Aube sacrée"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 376
+    equippable:
+      slot: LEGS
+      model: oraxen:paladin
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 6, operation: 0, slot: LEGS }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: LEGS }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/paladin_leggings
+
+paladin_boots:
+  itemname: "<#f0c850>Solerets de l'Aube sacrée"
+  material: PAPER
+  lore:
+    - "<gray>Argent béni, liseré d'or."
+    - ""
+    - "<dark_gray>Classe : <yellow>Paladin"
+    - "<dark_gray>Panoplie : <white>Aube sacrée"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 324
+    equippable:
+      slot: FEET
+      model: oraxen:paladin
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: FEET }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: FEET }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/paladin_boots
+
+mage_helmet:
+  itemname: "<#9b6bff>Capuche de l'Arcaniste"
+  material: PAPER
+  lore:
+    - "<gray>Tissu tissé de fils de mana."
+    - ""
+    - "<dark_gray>Classe : <yellow>Mage"
+    - "<dark_gray>Panoplie : <white>Arcaniste"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 151
+    equippable:
+      slot: HEAD
+      model: oraxen:mage
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 1, operation: 0, slot: HEAD }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/mage_helmet
+
+mage_chestplate:
+  itemname: "<#9b6bff>Robe de l'Arcaniste"
+  material: PAPER
+  lore:
+    - "<gray>Tissu tissé de fils de mana."
+    - ""
+    - "<dark_gray>Classe : <yellow>Mage"
+    - "<dark_gray>Panoplie : <white>Arcaniste"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 220
+    equippable:
+      slot: CHEST
+      model: oraxen:mage
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 3, operation: 0, slot: CHEST }
+    - { attribute: MAX_HEALTH, amount: 2, operation: 0, slot: CHEST }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/mage_chestplate
+
+mage_leggings:
+  itemname: "<#9b6bff>Chausses de l'Arcaniste"
+  material: PAPER
+  lore:
+    - "<gray>Tissu tissé de fils de mana."
+    - ""
+    - "<dark_gray>Classe : <yellow>Mage"
+    - "<dark_gray>Panoplie : <white>Arcaniste"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 206
+    equippable:
+      slot: LEGS
+      model: oraxen:mage
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: LEGS }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/mage_leggings
+
+mage_boots:
+  itemname: "<#9b6bff>Bottines de l'Arcaniste"
+  material: PAPER
+  lore:
+    - "<gray>Tissu tissé de fils de mana."
+    - ""
+    - "<dark_gray>Classe : <yellow>Mage"
+    - "<dark_gray>Panoplie : <white>Arcaniste"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 178
+    equippable:
+      slot: FEET
+      model: oraxen:mage
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 1, operation: 0, slot: FEET }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/mage_boots
+
+rodeur_helmet:
+  itemname: "<#7fae4a>Capuche du Traqueur"
+  material: PAPER
+  lore:
+    - "<gray>Cuir souple, fait pour la traque."
+    - ""
+    - "<dark_gray>Classe : <yellow>Rôdeur"
+    - "<dark_gray>Panoplie : <white>Traqueur"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 193
+    equippable:
+      slot: HEAD
+      model: oraxen:rodeur
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: HEAD }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/rodeur_helmet
+
+rodeur_chestplate:
+  itemname: "<#7fae4a>Veste du Traqueur"
+  material: PAPER
+  lore:
+    - "<gray>Cuir souple, fait pour la traque."
+    - ""
+    - "<dark_gray>Classe : <yellow>Rôdeur"
+    - "<dark_gray>Panoplie : <white>Traqueur"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 280
+    equippable:
+      slot: CHEST
+      model: oraxen:rodeur
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 5, operation: 0, slot: CHEST }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/rodeur_chestplate
+
+rodeur_leggings:
+  itemname: "<#7fae4a>Pantalon du Traqueur"
+  material: PAPER
+  lore:
+    - "<gray>Cuir souple, fait pour la traque."
+    - ""
+    - "<dark_gray>Classe : <yellow>Rôdeur"
+    - "<dark_gray>Panoplie : <white>Traqueur"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 263
+    equippable:
+      slot: LEGS
+      model: oraxen:rodeur
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 4, operation: 0, slot: LEGS }
+    - { attribute: MOVEMENT_SPEED, amount: 0.005, operation: 0, slot: LEGS }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/rodeur_leggings
+
+rodeur_boots:
+  itemname: "<#7fae4a>Bottes du Traqueur"
+  material: PAPER
+  lore:
+    - "<gray>Cuir souple, fait pour la traque."
+    - ""
+    - "<dark_gray>Classe : <yellow>Rôdeur"
+    - "<dark_gray>Panoplie : <white>Traqueur"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 226
+    equippable:
+      slot: FEET
+      model: oraxen:rodeur
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: FEET }
+    - { attribute: MOVEMENT_SPEED, amount: 0.005, operation: 0, slot: FEET }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/rodeur_boots
+
+druide_helmet:
+  itemname: "<#5c9640>Couronne du Sylvestre"
+  material: PAPER
+  lore:
+    - "<gray>Écorce vivante et mousse des bois anciens."
+    - ""
+    - "<dark_gray>Classe : <yellow>Druide"
+    - "<dark_gray>Panoplie : <white>Sylvestre"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 206
+    equippable:
+      slot: HEAD
+      model: oraxen:druide
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: HEAD }
+    - { attribute: MAX_HEALTH, amount: 1, operation: 0, slot: HEAD }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/druide_helmet
+
+druide_chestplate:
+  itemname: "<#5c9640>Plastron du Sylvestre"
+  material: PAPER
+  lore:
+    - "<gray>Écorce vivante et mousse des bois anciens."
+    - ""
+    - "<dark_gray>Classe : <yellow>Druide"
+    - "<dark_gray>Panoplie : <white>Sylvestre"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 300
+    equippable:
+      slot: CHEST
+      model: oraxen:druide
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 5, operation: 0, slot: CHEST }
+    - { attribute: MAX_HEALTH, amount: 1, operation: 0, slot: CHEST }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/druide_chestplate
+
+druide_leggings:
+  itemname: "<#5c9640>Jambières du Sylvestre"
+  material: PAPER
+  lore:
+    - "<gray>Écorce vivante et mousse des bois anciens."
+    - ""
+    - "<dark_gray>Classe : <yellow>Druide"
+    - "<dark_gray>Panoplie : <white>Sylvestre"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 282
+    equippable:
+      slot: LEGS
+      model: oraxen:druide
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 4, operation: 0, slot: LEGS }
+    - { attribute: MAX_HEALTH, amount: 1, operation: 0, slot: LEGS }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/druide_leggings
+
+druide_boots:
+  itemname: "<#5c9640>Bottes du Sylvestre"
+  material: PAPER
+  lore:
+    - "<gray>Écorce vivante et mousse des bois anciens."
+    - ""
+    - "<dark_gray>Classe : <yellow>Druide"
+    - "<dark_gray>Panoplie : <white>Sylvestre"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 243
+    equippable:
+      slot: FEET
+      model: oraxen:druide
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: FEET }
+    - { attribute: MAX_HEALTH, amount: 1, operation: 0, slot: FEET }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/druide_boots
+
+lamerunique_helmet:
+  itemname: "<#3ee6e6>Heaume des Runes d'obsidienne"
+  material: PAPER
+  lore:
+    - "<gray>Obsidienne gravée de runes vives."
+    - ""
+    - "<dark_gray>Classe : <yellow>Lame-runique"
+    - "<dark_gray>Panoplie : <white>Runes d'obsidienne"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 248
+    equippable:
+      slot: HEAD
+      model: oraxen:lamerunique
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: HEAD }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: HEAD }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/lamerunique_helmet
+
+lamerunique_chestplate:
+  itemname: "<#3ee6e6>Cuirasse des Runes d'obsidienne"
+  material: PAPER
+  lore:
+    - "<gray>Obsidienne gravée de runes vives."
+    - ""
+    - "<dark_gray>Classe : <yellow>Lame-runique"
+    - "<dark_gray>Panoplie : <white>Runes d'obsidienne"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 360
+    equippable:
+      slot: CHEST
+      model: oraxen:lamerunique
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 6, operation: 0, slot: CHEST }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: CHEST }
+    - { attribute: ATTACK_DAMAGE, amount: 0.5, operation: 0, slot: CHEST }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/lamerunique_chestplate
+
+lamerunique_leggings:
+  itemname: "<#3ee6e6>Jambières des Runes d'obsidienne"
+  material: PAPER
+  lore:
+    - "<gray>Obsidienne gravée de runes vives."
+    - ""
+    - "<dark_gray>Classe : <yellow>Lame-runique"
+    - "<dark_gray>Panoplie : <white>Runes d'obsidienne"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 338
+    equippable:
+      slot: LEGS
+      model: oraxen:lamerunique
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 5, operation: 0, slot: LEGS }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: LEGS }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/lamerunique_leggings
+
+lamerunique_boots:
+  itemname: "<#3ee6e6>Bottes des Runes d'obsidienne"
+  material: PAPER
+  lore:
+    - "<gray>Obsidienne gravée de runes vives."
+    - ""
+    - "<dark_gray>Classe : <yellow>Lame-runique"
+    - "<dark_gray>Panoplie : <white>Runes d'obsidienne"
+  components:
+    max_stack_size: 1
+    durability:
+      value: 291
+    equippable:
+      slot: FEET
+      model: oraxen:lamerunique
+  AttributeModifiers:
+    - { attribute: ARMOR, amount: 2, operation: 0, slot: FEET }
+    - { attribute: ARMOR_TOUGHNESS, amount: 1, operation: 0, slot: FEET }
+  pack:
+    generate_model: true
+    parent_model: item/generated
+    textures:
+      - evo/armures/lamerunique_boots
