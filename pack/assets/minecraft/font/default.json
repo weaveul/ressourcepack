@@ -469,6 +469,375 @@
    ]
   },
   {
+   "type": "bitmap",
+   "file": "evo:hud/energie_cadre.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_1.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_2.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_3.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_4.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_5.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_6.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_7.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_8.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_9.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_10.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_11.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_12.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_13.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_14.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_15.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_16.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_17.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_18.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_19.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_20.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_21.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_22.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_23.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_24.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_25.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_26.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_27.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_28.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_29.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_30.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_31.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_32.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_33.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_34.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_35.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_36.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_37.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_38.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_39.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
+   "type": "bitmap",
+   "file": "evo:hud/energie_40.png",
+   "ascent": -16,
+   "height": 9,
+   "chars": [
+    ""
+   ]
+  },
+  {
    "type": "space",
    "advances": {
     "": -1,
