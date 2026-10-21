@@ -271,19 +271,17 @@ def meuble_etagere():
 
 
 def meuble_lanterne():
-    """Lanterne de fer forgé à bougie, qui éclaire."""
+    """Lanterne de fer forgé à bougie, qui éclaire. Mêmes dimensions que la lanterne vanilla (6x7, chapeau 4x2)."""
     it = furniture('meuble_lanterne')
-    it.box((4.5, 0, 4.5), (11.5, 1.2, 11.5), 'forge_iron')
+    it.box((5, 0, 5), (11, 1, 11), 'forge_iron')
     # vitres éclairées par la bougie (opaques : le rendu d'objet ne gère pas la transparence partielle ici)
-    it.box((5, 1.2, 5), (11, 9.6, 11), 'lit_glass', faces={'up': 'forge_iron', 'down': 'forge_iron'})
-    for x in (4.6, 10.6):
-        for z in (4.6, 10.6):
-            it.box((x, 1.2, z), (x + 0.8, 9.6, z + 0.8), 'forge_iron')
-    it.box((7, 1.2, 7), (9, 5.2, 9), 'wax')
-    it.box((7.4, 5.2, 7.4), (8.6, 7.0, 8.6), 'flame', light=15)
-    it.box((4.5, 9.6, 4.5), (11.5, 10.8, 11.5), 'forge_iron')
-    it.box((6, 10.8, 6), (10, 12.0, 10), 'forge_iron')
-    it.box((7.4, 12.0, 7.6), (8.6, 14.2, 8.4), 'forge_iron')
+    it.box((5.3, 1, 5.3), (10.7, 6, 10.7), 'lit_glass', faces={'up': 'forge_iron', 'down': 'forge_iron'})
+    for x in (5, 10.4):
+        for z in (5, 10.4):
+            it.box((x, 1, z), (x + 0.6, 6, z + 0.6), 'forge_iron')
+    it.box((5, 6, 5), (11, 7, 11), 'forge_iron')
+    it.box((6, 7, 6), (10, 9, 10), 'forge_iron')
+    it.box((7.5, 9, 7.6), (8.5, 10.6, 8.4), 'forge_iron')
     return it
 
 
