@@ -511,7 +511,10 @@ def main():
         yml += yaml_for(t)
     # Les pièces sont données par EvoPerso (gear.yml) : plus d'objet Oraxen séparé.
     preview(THEMES).save(os.path.join(HERE, 'apercu.png'))
-    print(f'{len(THEMES)} panoplies, {len(THEMES) * 4} pièces')
+    # Casques modelés en 3D : repointent oraxen:<classe>_helmet vers evo:item/casque3d_<classe> (casques3d.py).
+    import casques3d
+    casques3d.build(PACK)
+    print(f'{len(THEMES)} panoplies, {len(THEMES) * 4} pièces, casques en 3D')
 
 
 if __name__ == '__main__':
