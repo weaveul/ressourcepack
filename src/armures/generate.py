@@ -4,7 +4,9 @@ Sortie (à copier dans plugins/Oraxen/ sur le serveur) :
   src/armures/oraxen/pack/textures/evo/armures/<classe>_armor_layer_1.png  casque, plastron, bras, bottes
   src/armures/oraxen/pack/textures/evo/armures/<classe>_armor_layer_2.png  jambières
   src/armures/oraxen/pack/textures/evo/armures/<classe>_<pièce>.png        icônes 16x16
-  src/armures/oraxen/items/evo_armures.yml                                 objets Oraxen
+
+Les pièces elles-mêmes sont les armures de classe d'EvoPerso (gear.yml, champ modele: <classe>) : EvoPerso pose
+item_model oraxen:<classe>_<pièce> et equippable oraxen:<classe>. yaml_for() n'est plus utilisé (ancien objet Oraxen).
   src/armures/apercu.png                                                   aperçu de face
 
 Côté client, le script écrit aussi directement dans pack/assets/oraxen/ ce qu'Oraxen générerait
@@ -508,8 +510,7 @@ def main():
             img.save(os.path.join(TEX, f'{t.key}_{piece}.png'))
         pack_files(t, l1, l2, icons)
         yml += yaml_for(t)
-    with open(os.path.join(OUT, 'items', 'evo_armures.yml'), 'w', encoding='utf-8') as f:
-        f.write('\n'.join(yml))
+    # Les pièces sont données par EvoPerso (gear.yml) : plus d'objet Oraxen séparé.
     preview(THEMES).save(os.path.join(HERE, 'apercu.png'))
     print(f'{len(THEMES)} panoplies, {len(THEMES) * 4} pièces')
 
