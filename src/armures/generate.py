@@ -82,6 +82,8 @@ def motif(t, kind, face, px, py, w, hh, r0, r1):
     c = t.base
     # dégradé léger vers le bas
     c = mix(c, t.dark, 0.25 * (py - r0) / max(1, r1 - r0))
+    if face == 'bottom' and kind == 'arm' and not t.sleeves:
+        return None  # sans manches : rien au bout des bras, sinon un carré flotte sur les mains
     if face in ('top', 'bottom'):
         c = mix(t.base, t.light, 0.25) if face == 'top' else t.dark
         if edge_x or py == 0 or py == hh - 1:
