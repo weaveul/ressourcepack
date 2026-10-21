@@ -3,11 +3,12 @@ import os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from PIL import Image, ImageDraw
 from catalog import ALL
+from mobs import MOB_WEAPONS, FURNITURE_ITEMS
 from render import render
 
 CELL = 160
 tiles = []
-for fn in ALL:
+for fn in ALL + MOB_WEAPONS + FURNITURE_ITEMS:
     it = fn()
     out = it.save(getattr(it, 'variants', None))
     for suffix, (name, img, elements, display) in out.items():

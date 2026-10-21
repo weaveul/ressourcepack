@@ -1,0 +1,73 @@
+# Meubles de planque en 3D (modèles evo:<id> du dépôt ressourcepack, src/items/mobs.py).
+# Entité d'affichage sans transformation : le modèle 16x16x16 remplit exactement le bloc où il est posé.
+
+meuble_chaise:
+  itemname: "<#c8a06a>Chaise de planque"
+  material: PAPER
+  lore:
+    - "<gray>Clic droit pour s'asseoir."
+  components:
+    item_model: evo:meuble_chaise
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      seats:
+        - 0,-1.3,0
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: meuble_chaise, probability: 1.0 }
+
+meuble_etagere:
+  itemname: "<#c8a06a>Étagère de planque"
+  material: PAPER
+  lore:
+    - "<gray>Livres, bocaux et bric-à-brac."
+  components:
+    item_model: evo:meuble_etagere
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      barrier: true
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: meuble_etagere, probability: 1.0 }
+
+meuble_lanterne:
+  itemname: "<#ffc850>Lanterne de planque"
+  material: PAPER
+  lore:
+    - "<gray>Une bougie à l'abri du vent."
+  components:
+    item_model: evo:meuble_lanterne
+  mechanics:
+    furniture:
+      type: DISPLAY_ENTITY
+      properties:
+        display_transform: NONE
+      hitboxes:
+        - 0,0,0 0.5,0.9
+      limited_placing:
+        roof: false
+        floor: true
+        wall: false
+      lights:
+        - 0,0,0 13
+      drop:
+        silktouch: false
+        loots:
+          - { oraxen_item: meuble_lanterne, probability: 1.0 }

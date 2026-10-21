@@ -1,0 +1,141 @@
+# Armes des monstres MythicMobs, en 3D (modèles evo:<id> du dépôt ressourcepack, src/items/mobs.py).
+# Lâchées via les drops MythicMobs « oraxen <id> <quantité> <chance> ».
+# Matériau de base = ce que Heroes autorise (épée, hache, arc) ; pas de MACE ni d'arbalète, interdites à toutes les classes.
+
+mob_dague_rouillee:
+  itemname: "<white>Dague rouillée"
+  material: STONE_SWORD
+  lore:
+    - "<gray>Arme de fortune gobeline."
+    - ""
+    - "<dark_gray>Butin : <green>Gobelin pillard"
+    - "<white>Commun"
+  components:
+    item_model: evo:mob_dague_rouillee
+
+mob_arc_os:
+  itemname: "<white>Arc d'os"
+  material: BOW
+  lore:
+    - "<gray>Des os liés de tendons séchés."
+    - ""
+    - "<dark_gray>Butin : <green>Squelette errant"
+    - "<white>Commun"
+  components:
+    item_model: evo:mob_arc_os
+  Enchantments:
+    power: 1
+
+mob_lame_chevalier:
+  itemname: "<green>Lame du Chevalier déchu"
+  material: IRON_SWORD
+  lore:
+    - "<gray>Elle garde la mémoire d'un serment brisé."
+    - ""
+    - "<dark_gray>Butin : <green>Chevalier squelette"
+    - "<green>Peu commun"
+  components:
+    item_model: evo:mob_lame_chevalier
+  Enchantments:
+    sharpness: 2
+    unbreaking: 1
+
+mob_hachoir_orc:
+  itemname: "<green>Hachoir d'orc"
+  material: IRON_AXE
+  lore:
+    - "<gray>Plus fait pour trancher la viande que pour l'élégance."
+    - ""
+    - "<dark_gray>Butin : <green>Orc brute"
+    - "<green>Peu commun"
+  components:
+    item_model: evo:mob_hachoir_orc
+  Enchantments:
+    sharpness: 1
+    unbreaking: 1
+
+mob_dague_culte:
+  itemname: "<green>Dague sacrificielle"
+  material: IRON_SWORD
+  lore:
+    - "<gray>Sa lame ondulée boit la lumière."
+    - ""
+    - "<dark_gray>Butin : <green>Cultiste de l'Ombre"
+    - "<green>Peu commun"
+  components:
+    item_model: evo:mob_dague_culte
+  Enchantments:
+    sharpness: 1
+    looting: 1
+
+mob_massue_troll:
+  itemname: "<blue>Massue du Troll"
+  material: STONE_AXE
+  lore:
+    - "<gray>Un tronc noueux hérissé d'os."
+    - ""
+    - "<dark_gray>Butin : <green>Troll des marais"
+    - "<blue>Rare"
+  components:
+    item_model: evo:mob_massue_troll
+  Enchantments:
+    sharpness: 2
+    knockback: 2
+    unbreaking: 2
+
+mob_hache_chef:
+  itemname: "<blue>Hache du Chef de guerre"
+  material: IRON_AXE
+  lore:
+    - "<gray>Lourde, cruelle, efficace."
+    - ""
+    - "<dark_gray>Butin : <green>Chef de guerre orc"
+    - "<blue>Rare"
+  components:
+    item_model: evo:mob_hache_chef
+  Enchantments:
+    sharpness: 3
+    unbreaking: 2
+
+mob_baton_givre:
+  itemname: "<blue>Bâton de givre"
+  material: BLAZE_ROD
+  lore:
+    - "<gray>Un focalisateur glacé, prisé des mages."
+    - "<gray>Peut servir de base à une baguette (Magic)."
+    - ""
+    - "<dark_gray>Butin : <green>Liche mineure"
+    - "<blue>Rare"
+  components:
+    item_model: evo:mob_baton_givre
+    enchantment_glint_override: true
+
+mob_lame_roi_liche:
+  itemname: "<dark_purple>Lame du Roi-Liche"
+  material: NETHERITE_SWORD
+  lore:
+    - "<gray>Forgée dans l'os et la glace éternelle."
+    - ""
+    - "<dark_gray>Butin : <green>Morvhal, le Roi-Liche"
+    - "<dark_purple>Épique"
+  components:
+    item_model: evo:mob_lame_roi_liche
+  Enchantments:
+    sharpness: 5
+    smite: 3
+    unbreaking: 3
+
+mob_marteau_gardien:
+  itemname: "<gold>Marteau du Gardien"
+  material: NETHERITE_AXE
+  lore:
+    - "<gray>Arraché au cœur de la Forge Ancienne."
+    - ""
+    - "<dark_gray>Butin : <green>Le Gardien de la Forge Ancienne"
+    - "<gold>Légendaire"
+  components:
+    item_model: evo:mob_marteau_gardien
+    unbreakable: {}
+  Enchantments:
+    sharpness: 4
+    knockback: 1
