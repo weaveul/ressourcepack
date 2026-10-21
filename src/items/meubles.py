@@ -292,8 +292,8 @@ def nain_coffre():
     it = F('nain_coffre')
     it.box((1.5, 0, 3.5), (14.5, 9, 12.5), 'dw_wood')
     it.box((1.2, 9, 3.2), (14.8, 12, 12.8), 'dw_wood')
-    for x in (1.2, 7.4, 13.6):
-        it.box((x, -0.1, 3.0), (x + 1.2, 12.2, 13.0), 'dw_iron')
+    for x in (2.8, 7.4, 12.0):
+        it.box((x, 0, 3.0), (x + 1.2, 12.2, 13.0), 'dw_iron')
     it.box((6, 6, 2.8), (10, 10, 3.2), 'dw_gold')
     it.box((7.2, 7, 2.6), (8.8, 8.6, 2.8), 'rune_gold')
     return it
@@ -574,10 +574,32 @@ STYLES = {
 }
 
 
+def unfight(it, eps=0.1):
+    """Évite le scintillement : quand deux pavés de matériaux différents ont une face visible dans le même plan,
+    le plus petit dépasse de eps vers l'extérieur (les faces du dessous posées au sol ne comptent pas)."""
+    E = it.els
+    for i, a in enumerate(E):
+        for b in E[i + 1:]:
+            if a['mat'] == b['mat']:
+                continue
+            for ax in range(3):
+                o = [k for k in range(3) if k != ax]
+                if not all(min(a['to'][k], b['to'][k]) - max(a['from'][k], b['from'][k]) > 0.01 for k in o):
+                    continue
+                for side, key in ((1, 'to'), (-1, 'from')):
+                    if abs(a[key][ax] - b[key][ax]) > 1e-6 or (ax == 1 and side == -1 and a[key][ax] <= 0):
+                        continue
+                    area = lambda e: (e['to'][o[0]] - e['from'][o[0]]) * (e['to'][o[1]] - e['from'][o[1]])
+                    small = a if area(a) <= area(b) else b
+                    small[key] = list(small[key])
+                    small[key][ax] = round(small[key][ax] + side * eps, 3)
+    return it
+
+
 def fitted(fn):
     """Réduit l'icône (inventaire, main, sol) des meubles plus grands qu'un bloc ; la pose reste à l'échelle 1."""
     def make():
-        it = fn()
+        it = unfight(fn())
         lo = [min(e['from'][k] for e in it.els) for k in range(3)]
         hi = [max(e['to'][k] for e in it.els) for k in range(3)]
         k = min(1.0, 16 / max(hi[i] - lo[i] for i in range(3)))
