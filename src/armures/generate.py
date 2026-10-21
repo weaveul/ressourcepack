@@ -21,6 +21,8 @@ from PIL import Image
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'items'))
 from kit import h, mix, clamp  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import peinture_hd  # noqa: E402
 
 HERE = os.path.dirname(__file__)
 OUT = os.path.join(HERE, 'oraxen')
@@ -507,10 +509,11 @@ def main():
         icons = {piece: icon(t, piece) for piece, _, _ in PIECES}
         for piece, img in icons.items():
             img.save(os.path.join(TEX, f'{t.key}_{piece}.png'))
-        pack_files(t, l1, l2, icons)
+        # Calques portés en double résolution, peints en détail (peinture_hd.py) ; les 64x32 restent pour Oraxen.
+        pack_files(t, *peinture_hd.layers_hd(t.key), icons)
         yml += yaml_for(t)
     # Les pièces sont données par EvoPerso (gear.yml) : plus d'objet Oraxen séparé.
-    preview(THEMES).save(os.path.join(HERE, 'apercu.png'))
+    peinture_hd.preview([t.key for t in THEMES]).save(os.path.join(HERE, 'apercu.png'))
     # Casques modelés en 3D : repointent oraxen:<classe>_helmet vers evo:item/casque3d_<classe> (casques3d.py).
     import casques3d
     casques3d.build(PACK)
