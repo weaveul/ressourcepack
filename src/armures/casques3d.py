@@ -430,30 +430,32 @@ def build(pack_oraxen, preview_dir=None):
     oraxen:<classe>_<palier>_<variante>_helmet dessus, et oraxen:<classe>_helmet (pièces historiques) sur rare 2."""
     import json
     import raretes
+    import kit_armures
     tiles = {}
     for tier in raretes.TIERS:
-        with raretes.palier(tier):
-            for key in CASQUES:
-                for v, fn in enumerate(variants(key), 1):
-                    name = f'{key}_{tier}_{v}'
-                    it = fn()
-                    it.id = f'casque3d_{name}'
-                    raretes.aura(it, tier)
-                    it.save()
-                    prev = fn()                  # aperçu : le casque posé sur une tête
-                    raretes.aura(prev, tier)
-                    prev.box((4, 4, 4), (12, 12, 12), 'skin')
-                    prev.box((5, 7, 3.98), (6.6, 8, 4), 'slit')
-                    prev.box((9.4, 7, 3.98), (11, 8, 4), 'slit')
-                    pimg, pels = prev.build()
-                    d = {'gui': {'rotation': [15, 160, 0], 'translation': [0, -2, 0], 'scale': [0.5] * 3}}
-                    tiles[name] = render(pimg, pels, d, 200)
-                    with open(os.path.join(pack_oraxen, 'items', f'{name}_helmet.json'), 'w') as f:
-                        json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{name}'}}, f,
-                                  separators=(',', ':'))
+        for key in CASQUES:
+            for v in range(1, VARIANTS + 1):
+                # chaque panoplie a sa propre combinaison de pièces et de couleurs (kit_armures.TABLE)
+                name = f'{key}_{tier}_{v}'
+                kit_armures.helmet(key, tier, v).save()
+                prev = kit_armures.helmet(key, tier, v)          # aperçu : le casque posé sur une tête
+                prev.box((4, 4, 4), (12, 12, 12), 'skin')
+                prev.box((5, 7, 3.98), (6.6, 8, 4), 'slit')
+                prev.box((9.4, 7, 3.98), (11, 8, 4), 'slit')
+                pimg, pels = prev.build()
+                d = {'gui': {'rotation': [15, 160, 0], 'translation': [0, -2, 0], 'scale': [0.5] * 3}}
+                tiles[name] = render(pimg, pels, d, 200)
+                with open(os.path.join(pack_oraxen, 'items', f'{name}_helmet.json'), 'w') as f:
+                    json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{name}'}}, f,
+                              separators=(',', ':'))
+    # pièces historiques (sans rareté) : le casque d'origine de la classe
+    for key, fn in CASQUES.items():
+        it = fn()
+        it.id = f'casque3d_{key}'
+        it.save()
     for key in CASQUES:
         with open(os.path.join(pack_oraxen, 'items', f'{key}_helmet.json'), 'w') as f:
-            json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{key}_rare_2'}}, f,
+            json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{key}'}}, f,
                       separators=(',', ':'))
     # une planche par classe : lignes = paliers, colonnes = variantes
     out = preview_dir or HERE

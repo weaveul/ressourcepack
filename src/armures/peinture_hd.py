@@ -641,7 +641,11 @@ BODY, ARM, LEG = (16, 16, 8, 12, 4), (40, 16, 4, 12, 4), (0, 16, 4, 12, 4)
 
 
 def painter_for(key, variant=2):
-    """Variante 1 à 4 de la tenue : 2 = le peintre historique de ce fichier, 1/3/4 = peinture_paliers."""
+    """Variante 1 à 4 de la tenue : 2 = le peintre historique de ce fichier, 1/3/4 = peinture_paliers ;
+    ('kit', palier, variante) = kit_armures."""
+    if isinstance(variant, tuple):
+        import kit_armures
+        return kit_armures.body(key, variant[1], variant[2])
     if variant == 2:
         return PAINTERS[key]
     import peinture_paliers
@@ -663,6 +667,11 @@ def layers_hd(key, tier='rare', variant=2):
     """Calques 1 et 2 de la panoplie : variante 1 à 4, au palier de rareté donné (raretes.TIERS)."""
     with raretes.palier(tier):
         return _layers_hd(key, tier, variant)
+
+
+def layers_kit(key, tier, variant):
+    """Calques de la panoplie kit_armures (la palette porte déjà la rareté : pas de palier ni de liseré ajouté)."""
+    return _layers_hd(key, 'rare', ('kit', tier, variant))
 
 
 def _layers_hd(key, tier, variant):

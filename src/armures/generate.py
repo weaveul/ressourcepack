@@ -24,7 +24,7 @@ from kit import h, mix, clamp  # noqa: E402
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import peinture_hd  # noqa: E402
 import raretes  # noqa: E402
-import peinture_paliers, casques_paliers  # noqa: E402,F401  (matériaux enregistrés avant tout palier)
+import peinture_paliers, casques_paliers, kit_armures  # noqa: E402,F401  (matériaux enregistrés avant tout palier)
 
 HERE = os.path.dirname(__file__)
 OUT = os.path.join(HERE, 'oraxen')
@@ -536,15 +536,12 @@ def main():
     for key in [t.key for t in THEMES] + MULTI:
         for tier in raretes.TIERS:
             for v in (1, 2, 3, 4):
-                l1, l2 = peinture_hd.layers_hd(key, tier, v)
+                l1, l2 = peinture_hd.layers_kit(key, tier, v)
                 pack_files(f'{key}_{tier}_{v}', l1, l2, peinture_hd.icons_hd(key, tier, (l1, l2)))
-                if tier == 'rare' and v == 2:
-                    pack_files(key, l1, l2, peinture_hd.icons_hd(key, tier, (l1, l2)))
+        l1, l2 = peinture_hd.layers_hd(key)          # pièces historiques sans rareté : look d'origine
+        pack_files(key, l1, l2, peinture_hd.icons_hd(key, 'rare', (l1, l2)))
     # Les pièces sont données par EvoPerso (gear.yml) : plus d'objet Oraxen séparé.
     keys = [t.key for t in THEMES] + MULTI
-    for v in (1, 2, 3, 4):
-        for tier in raretes.TIERS:
-            peinture_hd.preview(keys, tier, v).save(os.path.join(APERCUS, f'tenues_{tier}_{v}.png'))
     # Casques modelés en 3D : repointent oraxen:<classe>_helmet vers evo:item/casque3d_<classe> (casques3d.py).
     import casques3d
     casques3d.build(PACK, APERCUS)
