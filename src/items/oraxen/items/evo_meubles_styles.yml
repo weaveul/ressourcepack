@@ -66,8 +66,6 @@ elfe_lit:
         roof: false
         floor: true
         wall: false
-      seats:
-        - 0,-1.44,0
       drop:
         silktouch: false
         loots:
@@ -249,8 +247,6 @@ nain_lit:
         roof: false
         floor: true
         wall: false
-      seats:
-        - 0,-1.44,0
       drop:
         silktouch: false
         loots:
@@ -426,8 +422,6 @@ sorcier_lit:
         roof: false
         floor: true
         wall: false
-      seats:
-        - 0,-1.44,0
       drop:
         silktouch: false
         loots:
@@ -609,8 +603,6 @@ orc_lit:
         roof: false
         floor: true
         wall: false
-      seats:
-        - 0,-1.44,0
       drop:
         silktouch: false
         loots:

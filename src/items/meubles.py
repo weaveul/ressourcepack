@@ -698,8 +698,7 @@ def oraxen_meubles():
             out += ['      limited_placing:', '        roof: false', '        floor: true', '        wall: false']
             if kind == 'seat':
                 out += ['      seats:', f'        - 0,{seat(seat_y)},0']
-            if kind == 'bed':
-                out += ['      seats:', f'        - 0,{seat(7.0)},0']
+            # lits : pas de siège Oraxen, EvoPerso (BedRest) allonge le joueur au clic droit
             if kind.startswith('lamp'):
                 out += ['      lights:', '        - 0,1,0 13' if kind == 'lamp_solid' else '        - 0,0,0 13']
             if iid.endswith(('_coffre', '_armoire')):
