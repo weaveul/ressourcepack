@@ -499,3 +499,49 @@ def preview(keys):
 
 if __name__ == '__main__':
     preview(list(PAINTERS)).save(os.path.join(HERE, 'armures_hd_apercu.png'))
+
+
+def _front(layer, box):
+    fx, fy, w, hh = faces(*box)['front']
+    return layer.crop((fx * K, fy * K, (fx + w) * K, (fy + hh) * K))
+
+
+def _outline(img):
+    """Contour sombre d'un pixel autour de la silhouette, pour la lisibilité dans l'inventaire."""
+    out = Image.new('RGBA', img.size, (0, 0, 0, 0))
+    a = img.split()[3].load()
+    W, H = img.size
+    for y in range(H):
+        for x in range(W):
+            if a[x, y]:
+                continue
+            if any(0 <= x + dx < W and 0 <= y + dy < H and a[x + dx, y + dy]
+                   for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+                out.putpixel((x, y), (22, 20, 26, 255))
+    out.alpha_composite(img)
+    return out
+
+
+def icons_hd(key):
+    """Icônes 32x32 tirées des calques peints : plastron, jambières, bottes (le casque est modelé en 3D)."""
+    l1, l2 = layers_hd(key)
+    chest = Image.new('RGBA', (32, 32), (0, 0, 0, 0))
+    arm = _front(l1, ARM).crop((0, 0, 8, 18))
+    chest.alpha_composite(arm, (1, 4))
+    chest.alpha_composite(arm.transpose(Image.FLIP_LEFT_RIGHT), (23, 4))
+    chest.alpha_composite(_front(l1, BODY).crop((0, 0, 16, 24)), (8, 4))
+    for y in range(4, 7):                                  # encolure
+        for x in range(13 + (y - 4), 19 - (y - 4)):
+            chest.putpixel((x, y), (0, 0, 0, 0))
+    legs = Image.new('RGBA', (32, 32), (0, 0, 0, 0))
+    legs.alpha_composite(_front(l2, BODY).crop((0, 18, 16, 24)), (8, 3))
+    leg = _front(l2, LEG).crop((0, 0, 8, 18))
+    legs.alpha_composite(leg, (7, 9))
+    legs.alpha_composite(leg.transpose(Image.FLIP_LEFT_RIGHT), (17, 9))
+    boots = Image.new('RGBA', (32, 32), (0, 0, 0, 0))
+    boot = _front(l1, LEG).crop((0, 12, 8, 24))
+    for i, x in enumerate((5, 19)):
+        b = boot if i == 0 else boot.transpose(Image.FLIP_LEFT_RIGHT)
+        boots.alpha_composite(b, (x, 9))
+        boots.alpha_composite(b.crop((0, 8, 8, 12)), (x - 2 if i == 0 else x + 2, 17))   # pied qui dépasse vers l'avant
+    return {'chestplate': _outline(chest), 'leggings': _outline(legs), 'boots': _outline(boots)}

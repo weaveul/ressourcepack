@@ -510,7 +510,7 @@ def main():
         for piece, img in icons.items():
             img.save(os.path.join(TEX, f'{t.key}_{piece}.png'))
         # Calques portés en double résolution, peints en détail (peinture_hd.py) ; les 64x32 restent pour Oraxen.
-        pack_files(t, *peinture_hd.layers_hd(t.key), icons)
+        pack_files(t, *peinture_hd.layers_hd(t.key), {**icons, **peinture_hd.icons_hd(t.key)})
         yml += yaml_for(t)
     # Les pièces sont données par EvoPerso (gear.yml) : plus d'objet Oraxen séparé.
     peinture_hd.preview([t.key for t in THEMES]).save(os.path.join(HERE, 'apercu.png'))
