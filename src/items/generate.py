@@ -7,11 +7,12 @@ from mobs import MOB_WEAPONS, FURNITURE_ITEMS
 from meubles import STYLE_ITEMS, OPEN_ITEMS, oraxen_meubles
 from armes_butin import ARMES_BUTIN
 from consommables import CONSOMMABLES, OUTILS
+from raid import RAID
 from render import render
 
 CELL = 160
 tiles = []
-for fn in ALL + ARMES_BUTIN + CONSOMMABLES + OUTILS + MOB_WEAPONS + FURNITURE_ITEMS + STYLE_ITEMS + OPEN_ITEMS:
+for fn in ALL + ARMES_BUTIN + CONSOMMABLES + OUTILS + RAID + MOB_WEAPONS + FURNITURE_ITEMS + STYLE_ITEMS + OPEN_ITEMS:
     it = fn()
     out = it.save(getattr(it, 'variants', None))
     for suffix, (name, img, elements, display) in out.items():
