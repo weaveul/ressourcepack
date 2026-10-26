@@ -5,6 +5,7 @@ ses ornements : liseré violet et gemme pour l'épique, liseré d'or, gemme arde
 EvoPerso choisit le palier : oraxen:<set> pour rare, oraxen:<set>_<palier> pour les autres.
 """
 import colorsys
+import math
 from contextlib import contextmanager
 
 from kit import Mat, MATS, h, clamp
@@ -81,8 +82,13 @@ def trim_face(F, tier):
     trim = 'ep_trim' if tier == 'epique' else 'lg_trim'
     a = F.img.split()[3].load()
     m = MATS[trim]
-    # liseré le long des arêtes verticales, là où la face est peinte
-    for y in range(F.h):
+    # liseré le long des arêtes verticales du torse, là où la face est peinte (bras et jambes : bande en bas)
+    if F.part in ('arm', 'boot'):
+        for x in range(F.w):
+            for y in (F.h - 2,):
+                if a[x, y]:
+                    F.img.putpixel((x, y), m.color((x * 0.25, y * 0.25, 1), F.face, x, 1, F.w, 3))
+    for y in range(F.h if F.part == 'body' else 0):
         for x in (0, F.w - 1):
             if a[x, y]:
                 F.img.putpixel((x, y), m.color((x * 0.25, y * 0.25, 1), F.face, 1, y, 3, F.h))
@@ -127,3 +133,19 @@ def adorn_helmet(it, key, tier):
             a, b = sorted((x + side * 1.1, x + side * 2.0))
             it.box((a, y - 0.25, z - 0.5), (b, y + 0.25, z - 0.1), 'lg_trim')
             it.box((x + side * 2.3 - 0.25, y - 0.25, z - 0.65), (x + side * 2.3 + 0.25, y + 0.25, z - 0.35), 'lg_rune')
+
+
+def aura(it, tier):
+    """Signe du palier autour du casque, quelle que soit sa forme : éclats violets (épique), couronne d'étincelles
+    dorées en orbite (légendaire). Commun et rare n'en ont pas."""
+    if tier == 'epique':
+        pts = [(1.4, 9.0, 4.0), (14.6, 10.0, 5.0), (2.0, 11.0, 12.6), (14.0, 8.4, 12.0)]
+        mat, r = 'ep_gem', 0.4
+    elif tier == 'legendaire':
+        pts = [(8 + 7.2 * math.cos(a), 9.6 + 0.8 * math.sin(3 * a), 8 + 7.2 * math.sin(a))
+               for a in (2 * math.pi * i / 10 for i in range(10))]
+        mat, r = 'lg_rune', 0.38
+    else:
+        return
+    for (x, y, z) in pts:
+        it.box((x - r, y - r, z - r), (x + r, y + r, z + r), mat)

@@ -24,11 +24,13 @@ from kit import h, mix, clamp  # noqa: E402
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import peinture_hd  # noqa: E402
 import raretes  # noqa: E402
+import peinture_paliers, casques_paliers  # noqa: E402,F401  (matériaux enregistrés avant tout palier)
 
 HERE = os.path.dirname(__file__)
 OUT = os.path.join(HERE, 'oraxen')
 PACK = os.path.join(HERE, '..', '..', 'pack', 'assets', 'oraxen')
 TEX = os.path.join(OUT, 'pack', 'textures', 'evo', 'armures')
+APERCUS = os.path.join(HERE, 'apercus')
 
 
 def faces(u, v, w, hh, d):
@@ -505,6 +507,7 @@ MULTI = ['gardeserment', 'sentinelle', 'arcaniste']
 
 def main():
     os.makedirs(TEX, exist_ok=True)
+    os.makedirs(APERCUS, exist_ok=True)
     os.makedirs(os.path.join(OUT, 'items'), exist_ok=True)
     yml = ['# Généré par src/armures/generate.py (dépôt ressourcepack). Ne pas éditer à la main.', '']
     for t in THEMES:
@@ -516,21 +519,36 @@ def main():
             img.save(os.path.join(TEX, f'{t.key}_{piece}.png'))
         # Calques portés en double résolution, peints en détail (peinture_hd.py) ; les 64x32 restent pour Oraxen.
         yml += yaml_for(t)
-    # Calques portés en double résolution (peinture_hd.py), un jeu par palier de rareté (raretes.py) :
-    # oraxen:<set> pour rare, oraxen:<set>_<palier> pour commun, épique et légendaire.
+    # Calques portés en double résolution (peinture_hd.py / peinture_paliers.py) : 4 variantes par palier de rareté
+    # (raretes.py), oraxen:<set>_<palier>_<variante> ; oraxen:<set> (pièces historiques) = rare, variante 2.
+    import shutil
+    for sub in ('equipment', 'textures/entity/equipment', 'textures/item/armures', 'models/item/armures'):
+        shutil.rmtree(os.path.join(PACK, sub), ignore_errors=True)
+    for f in os.listdir(os.path.join(PACK, 'items')):
+        if f.endswith(('_helmet.json', '_chestplate.json', '_leggings.json', '_boots.json')):
+            os.remove(os.path.join(PACK, 'items', f))
+    evo = os.path.join(HERE, '..', '..', 'pack', 'assets', 'evo')
+    for sub, ext in (('items', '.json'), ('models/item', '.json'), ('textures/item', '.png')):
+        d = os.path.join(evo, sub)
+        for f in os.listdir(d):
+            if f.startswith('casque3d_'):
+                os.remove(os.path.join(d, f))
     for key in [t.key for t in THEMES] + MULTI:
         for tier in raretes.TIERS:
-            l1, l2 = peinture_hd.layers_hd(key, tier)
-            pack_files(key + raretes.SUFFIX[tier], l1, l2, peinture_hd.icons_hd(key, tier, (l1, l2)))
+            for v in (1, 2, 3, 4):
+                l1, l2 = peinture_hd.layers_hd(key, tier, v)
+                pack_files(f'{key}_{tier}_{v}', l1, l2, peinture_hd.icons_hd(key, tier, (l1, l2)))
+                if tier == 'rare' and v == 2:
+                    pack_files(key, l1, l2, peinture_hd.icons_hd(key, tier, (l1, l2)))
     # Les pièces sont données par EvoPerso (gear.yml) : plus d'objet Oraxen séparé.
     keys = [t.key for t in THEMES] + MULTI
-    peinture_hd.preview(keys).save(os.path.join(HERE, 'apercu.png'))
-    for tier in raretes.TIERS:
-        peinture_hd.preview(keys, tier).save(os.path.join(HERE, f'apercu_{tier}.png'))
+    for v in (1, 2, 3, 4):
+        for tier in raretes.TIERS:
+            peinture_hd.preview(keys, tier, v).save(os.path.join(APERCUS, f'tenues_{tier}_{v}.png'))
     # Casques modelés en 3D : repointent oraxen:<classe>_helmet vers evo:item/casque3d_<classe> (casques3d.py).
     import casques3d
-    casques3d.build(PACK)
-    print(f'{len(keys)} panoplies x {len(raretes.TIERS)} raretés, casques en 3D')
+    casques3d.build(PACK, APERCUS)
+    print(f'{len(keys)} classes x {len(raretes.TIERS)} raretés x 4 variantes, casques en 3D')
 
 
 if __name__ == '__main__':

@@ -640,39 +640,48 @@ def faces(u, v, w, hh, d):
 BODY, ARM, LEG = (16, 16, 8, 12, 4), (40, 16, 4, 12, 4), (0, 16, 4, 12, 4)
 
 
-def paint_box(layer, key, box, part, seed, skip=(), tier='rare'):
+def painter_for(key, variant=2):
+    """Variante 1 à 4 de la tenue : 2 = le peintre historique de ce fichier, 1/3/4 = peinture_paliers."""
+    if variant == 2:
+        return PAINTERS[key]
+    import peinture_paliers
+    return peinture_paliers.PAINTERS[(key, {1: 'commun', 3: 'epique', 4: 'legendaire'}[variant])]
+
+
+def paint_box(layer, key, box, part, seed, skip=(), tier='rare', variant=2):
+    fn = painter_for(key, variant)
     for name, (x, y, w, hh) in faces(*box).items():
         if name in skip:
             continue
         F = Face(part, name, w * K, hh * K, seed)
-        PAINTERS[key](F)
+        fn(F)
         raretes.trim_face(F, tier)
         layer.alpha_composite(F.img, (x * K, y * K))
 
 
-def layers_hd(key, tier='rare'):
-    """Calques 1 et 2 de la panoplie, au palier de rareté donné (raretes.TIERS)."""
+def layers_hd(key, tier='rare', variant=2):
+    """Calques 1 et 2 de la panoplie : variante 1 à 4, au palier de rareté donné (raretes.TIERS)."""
     with raretes.palier(tier):
-        return _layers_hd(key, tier)
+        return _layers_hd(key, tier, variant)
 
 
-def _layers_hd(key, tier):
+def _layers_hd(key, tier, variant):
     l1 = Image.new('RGBA', (64 * K, 32 * K), (0, 0, 0, 0))
-    paint_box(l1, key, BODY, 'body', 2, tier=tier)
-    paint_box(l1, key, ARM, 'arm', 3, tier=tier)
-    paint_box(l1, key, LEG, 'boot', 4, skip=('top',), tier=tier)
+    paint_box(l1, key, BODY, 'body', 2, tier=tier, variant=variant)
+    paint_box(l1, key, ARM, 'arm', 3, tier=tier, variant=variant)
+    paint_box(l1, key, LEG, 'boot', 4, skip=('top',), tier=tier, variant=variant)
     l2 = Image.new('RGBA', (64 * K, 32 * K), (0, 0, 0, 0))
-    paint_box(l2, key, BODY, 'waist', 5, skip=('top', 'bottom'), tier=tier)
-    paint_box(l2, key, LEG, 'leg', 6, skip=('top', 'bottom'), tier=tier)
+    paint_box(l2, key, BODY, 'waist', 5, skip=('top', 'bottom'), tier=tier, variant=variant)
+    paint_box(l2, key, LEG, 'leg', 6, skip=('top', 'bottom'), tier=tier, variant=variant)
     return l1, l2
 
 
-def preview(keys, tier='rare'):
+def preview(keys, tier='rare', variant=2):
     """Mannequins de face et de dos (casque 3D non représenté)."""
     S = 6
     sheet = Image.new('RGBA', (len(keys) * 2 * 18 * K * S // 2 + 20, 36 * K * S // 2 + 20), (40, 42, 48, 255))
     for n, key in enumerate(keys):
-        l1, l2 = layers_hd(key, tier)
+        l1, l2 = layers_hd(key, tier, variant)
         for v, side in enumerate(('front', 'back')):
             fig = Image.new('RGBA', (16 * K, 32 * K), (0, 0, 0, 0))
             for (x, y, w, hh) in ((4, 0, 8, 8), (4, 8, 8, 12), (0, 8, 4, 12), (12, 8, 4, 12), (4, 20, 4, 12), (8, 20, 4, 12)):

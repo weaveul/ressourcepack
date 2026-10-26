@@ -416,41 +416,56 @@ CASQUES = {'guerrier': guerrier, 'paladin': paladin, 'mage': mage, 'rodeur': rod
            'gardeserment': gardeserment, 'sentinelle': sentinelle, 'arcaniste': arcaniste}
 
 
-def build(pack_oraxen):
-    """Écrit evo:item/casque3d_<classe><palier> et repointe oraxen:<classe><palier>_helmet dessus, pour chaque palier."""
+VARIANTS = 4
+
+
+def variants(key):
+    """Les 4 silhouettes de la classe : 1 calotte simple, 2 casque historique, 3 et 4 formes de casques_paliers."""
+    from casques_paliers import PALIERS
+    return [PALIERS[(key, 'commun')], CASQUES[key], PALIERS[(key, 'epique')], PALIERS[(key, 'legendaire')]]
+
+
+def build(pack_oraxen, preview_dir=None):
+    """Écrit evo:item/casque3d_<classe>_<palier>_<variante> pour chaque palier et chaque variante, repointe
+    oraxen:<classe>_<palier>_<variante>_helmet dessus, et oraxen:<classe>_helmet (pièces historiques) sur rare 2."""
     import json
     import raretes
-    tiles = []
+    tiles = {}
     for tier in raretes.TIERS:
-        sfx = raretes.SUFFIX[tier]
         with raretes.palier(tier):
-            for key, fn in CASQUES.items():
-                it = fn()
-                it.id += sfx
-                raretes.adorn_helmet(it, key, tier)
-                it.save()
-                prev = fn()                      # aperçu : le casque posé sur une tête
-                raretes.adorn_helmet(prev, key, tier)
-                prev.box((4, 4, 4), (12, 12, 12), 'skin')
-                prev.box((5, 7, 3.98), (6.6, 8, 4), 'slit')
-                prev.box((9.4, 7, 3.98), (11, 8, 4), 'slit')
-                pimg, pels = prev.build()
-                d = {'gui': {'rotation': [15, 160, 0], 'translation': [0, -2, 0], 'scale': [0.55] * 3}}
-                tiles.append((key + sfx, render(pimg, pels, d, 240)))
-                with open(os.path.join(pack_oraxen, 'items', f'{key}{sfx}_helmet.json'), 'w') as f:
-                    json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{key}{sfx}'}}, f,
-                              separators=(',', ':'))
-    cols = len(CASQUES)
-    rows = (len(tiles) + cols - 1) // cols
-    sheet = Image.new('RGBA', (cols * 250, rows * 262), (56, 58, 66, 255))
-    d = ImageDraw.Draw(sheet)
-    for i, (key, im) in enumerate(tiles):
-        x, y = (i % cols) * 250, (i // cols) * 262
-        sheet.alpha_composite(im, (x + 5, y + 5))
-        d.text((x + 8, y + 246), key, fill=(230, 230, 230, 255))
-    sheet.save(os.path.join(HERE, 'casques3d_apercu.png'))
-    return sheet
-
+            for key in CASQUES:
+                for v, fn in enumerate(variants(key), 1):
+                    name = f'{key}_{tier}_{v}'
+                    it = fn()
+                    it.id = f'casque3d_{name}'
+                    raretes.aura(it, tier)
+                    it.save()
+                    prev = fn()                  # aperçu : le casque posé sur une tête
+                    raretes.aura(prev, tier)
+                    prev.box((4, 4, 4), (12, 12, 12), 'skin')
+                    prev.box((5, 7, 3.98), (6.6, 8, 4), 'slit')
+                    prev.box((9.4, 7, 3.98), (11, 8, 4), 'slit')
+                    pimg, pels = prev.build()
+                    d = {'gui': {'rotation': [15, 160, 0], 'translation': [0, -2, 0], 'scale': [0.5] * 3}}
+                    tiles[name] = render(pimg, pels, d, 200)
+                    with open(os.path.join(pack_oraxen, 'items', f'{name}_helmet.json'), 'w') as f:
+                        json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{name}'}}, f,
+                                  separators=(',', ':'))
+    for key in CASQUES:
+        with open(os.path.join(pack_oraxen, 'items', f'{key}_helmet.json'), 'w') as f:
+            json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{key}_rare_2'}}, f,
+                      separators=(',', ':'))
+    # une planche par classe : lignes = paliers, colonnes = variantes
+    out = preview_dir or HERE
+    for key in CASQUES:
+        sheet = Image.new('RGBA', (VARIANTS * 200 + 110, len(raretes.TIERS) * 200), (56, 58, 66, 255))
+        d = ImageDraw.Draw(sheet)
+        for r, tier in enumerate(raretes.TIERS):
+            d.text((8, r * 200 + 95), tier, fill=(230, 230, 230, 255))
+            for v in range(VARIANTS):
+                sheet.alpha_composite(tiles[f'{key}_{tier}_{v + 1}'], (110 + v * 200, r * 200))
+        sheet.save(os.path.join(out, f'casques_{key}.png'))
+    return tiles
 
 if __name__ == '__main__':
     build(os.path.join(HERE, '..', '..', 'pack', 'assets', 'oraxen'))
