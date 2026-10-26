@@ -321,29 +321,126 @@ def lamerunique():
     return it
 
 
+# --- Panoplies multiclasses ---------------------------------------------------------------------------------------
+MATS.update({
+    'gs_helm': Mat((100, 106, 120), 6, 0.72, pattern=hammered, hi=(176, 184, 200)),
+    'gs_gold': Mat((214, 168, 70), 6, 0.74, pattern=filigree, hi=(255, 230, 150)),
+    'gs_red': Mat((128, 28, 34), 8, 0.82, pattern=cloth_folds),
+    'gs_blue': Mat((36, 56, 124), 8, 0.82, pattern=cloth_folds),
+    'sn_hood': Mat((46, 72, 50), 6, 0.84, pattern=cloth_folds),
+    'sn_hood_d': Mat((32, 50, 36), 6, 0.84, pattern=cloth_folds),
+    'sn_amber': Mat((240, 170, 50), 4, 0.9, light=8, hi=(255, 230, 150)),
+    'ar_hood': Mat((50, 34, 80), 6, 0.84, pattern=cloth_folds),
+    'ar_hood_d': Mat((34, 24, 56), 6, 0.84, pattern=cloth_folds),
+    'ar_rune': Mat((90, 220, 255), 4, 0.95, light=14, hi=(220, 250, 255)),
+})
+
+
+def gardeserment():
+    it = Item('casque3d_gardeserment', density=4, display=HELMET)
+    shell(it, 'gs_helm')                                                      # heaume à sommet plat
+    it.box((4.4, 8.0, S - 0.05), (11.6, 8.8, S), 'slit')                     # fente des yeux
+    for x in (5.2, 6.2, 9.4, 10.4):
+        for y in (5.0, 6.2):
+            it.box((x, y, S - 0.05), (x + 0.5, y + 0.5, S), 'slit')          # trous de respiration
+    it.box((S - 0.3, 8.8, S - 0.3), (E + 0.3, 9.6, E + 0.3), 'gs_gold')      # bandeau d'or
+    it.box((S - 0.3, 3.4, S - 0.3), (E + 0.3, 4.2, E + 0.3), 'gs_gold')
+    it.box((7.4, 3.6, S - 0.6), (8.6, 8.0, S), 'gs_gold')                    # arête du nasal
+    it.box((7.4, 9.6, S - 0.6), (8.6, 12.4, S), 'gs_helm')
+    # cimier en éventail, bandes rouges et bleues
+    for i in range(7):
+        z = S + 0.4 + i * 1.2
+        ht = 1.2 + 2.6 * math.sin((i + 0.5) / 7 * math.pi)
+        it.box((7.4, 13.2, z), (8.6, 13.2 + ht, z + 1.2), 'gs_red' if i % 2 == 0 else 'gs_blue')
+    it.box((7.2, 13.0, S + 0.2), (8.8, 13.6, E - 0.2), 'gs_gold')
+    for side in (-1, 1):                                                      # rosaces latérales
+        x0 = S - 0.5 if side < 0 else E
+        it.box((x0, 7.0, 7.0), (x0 + 0.5, 9.0, 9.0), 'gs_gold')
+    return it
+
+
+def sentinelle():
+    it = Item('casque3d_sentinelle', density=4, display=HELMET)
+    # capuche creuse, rebord de feuilles, couronne de rameaux
+    it.box((S, 3.6, E - 0.8), (E, 12.6, E), 'sn_hood')
+    it.box((S, 3.6, S), (S + 0.6, 12.6, E - 0.8), 'sn_hood')
+    it.box((E - 0.6, 3.6, S), (E, 12.6, E - 0.8), 'sn_hood')
+    it.box((S + 0.6, 12.0, S), (E - 0.6, 12.6, E - 0.8), 'sn_hood')
+    it.box((S + 0.6, 10.4, S), (E - 0.6, 12.0, S + 0.8), 'sn_hood')
+    it.box((S + 0.6, 3.6, S), (5.0, 10.4, S + 0.8), 'sn_hood')
+    it.box((11.0, 3.6, S), (E - 0.6, 10.4, S + 0.8), 'sn_hood')
+    it.box((S + 0.6, 12.6, S + 0.6), (E - 0.6, 13.4, E - 0.2), 'sn_hood')
+    it.box((5.0, 9.8, S + 0.8), (11.0, 10.4, S + 1.0), 'ro_shadow')
+    for (x, y) in ((S - 0.2, 11.4), (5.4, 12.0), (7.2, 12.2), (9.0, 12.0), (10.8, 11.4)):
+        it.box((x, y, S - 0.5), (x + 1.8, y + 1.4, S + 0.4), 'dr_leaf')     # feuilles du rebord
+    for (x, y) in ((S - 0.4, 6.0), (S - 0.4, 8.6)):
+        it.box((x, y, S - 0.3), (x + 1.2, y + 1.6, S + 0.6), 'dr_leaf_d')
+        it.box((E - 0.8, y, S - 0.3), (E + 0.4, y + 1.6, S + 0.6), 'dr_leaf_d')
+    it.box((S - 0.2, 10.6, S - 0.2), (E + 0.2, 11.4, E + 0.2), 'dr_wood')    # bandeau de bois
+    it.box((7.3, 10.4, S - 0.5), (8.7, 11.6, S - 0.1), 'sn_amber')
+    for side in (-1, 1):                                                     # rameaux
+        x0 = 5.6 if side < 0 else 10.4
+        curve(it, x0, side, 6, lambda t: (1.6 * t, 13.2 + 3.2 * t, 9.0 + 1.2 * t, 0.45 - 0.15 * t),
+              ('dr_wood', 'dr_wood', 'dr_leaf'))
+    it.box((2.6, 2.8, 2.6), (13.4, 4.0, 13.4), 'sn_hood_d')
+    return it
+
+
+def arcaniste():
+    it = Item('casque3d_arcaniste', density=4, display=HELMET)
+    # capuche violette, mentonnière d'acier, cristal runique flottant
+    it.box((S, 3.6, E - 0.8), (E, 12.6, E), 'ar_hood')
+    it.box((S, 3.6, S), (S + 0.6, 12.6, E - 0.8), 'ar_hood')
+    it.box((E - 0.6, 3.6, S), (E, 12.6, E - 0.8), 'ar_hood')
+    it.box((S + 0.6, 12.0, S), (E - 0.6, 12.6, E - 0.8), 'ar_hood')
+    it.box((S + 0.6, 10.2, S), (E - 0.6, 12.0, S + 0.8), 'ar_hood_d')
+    it.box((S + 0.6, 12.6, S + 0.6), (E - 0.6, 13.6, E - 0.4), 'ar_hood')
+    for i in range(4):                                                       # pointe de la capuche
+        it.box((6.6 + i * 0.3, 13.4 + i * 0.6, 9 + i * 1.0), (9.4 - i * 0.3, 14.2 + i * 0.6, 10.6 + i * 1.0), 'ar_hood_d')
+    it.box((S - 0.1, 3.6, S - 0.4), (E + 0.1, 7.0, S + 0.6), 'lr_steel_l')   # mentonnière
+    it.box((S - 0.1, 6.8, S - 0.5), (E + 0.1, 7.4, S + 0.6), 'lr_silver')
+    for x in (5.0, 6.6, 9.0, 10.6):
+        it.box((x, 4.4, S - 0.5), (x + 0.4, 6.2, S - 0.4), 'ar_rune')
+    for side in (-1, 1):                                                     # plaques de tempe
+        x0 = S - 0.5 if side < 0 else E
+        it.box((x0, 6.6, 5.0), (x0 + 0.5, 11.0, 9.0), 'lr_steel_l')
+        it.box((x0 - 0.05 * side, 8.2, 6.4), (x0 + 0.5 + 0.05 * side, 9.4, 7.6), 'ar_rune')
+    # cristal en losange au-dessus du front (empilement de pavés)
+    for i, w in enumerate((0.3, 0.6, 0.9, 0.6, 0.3)):
+        it.box((8 - w, 14.4 + i * 0.6, S - 1.0 - w * 0.5), (8 + w, 15.0 + i * 0.6, S - 1.0 + w * 0.5), 'ar_rune')
+    return it
+
+
 CASQUES = {'guerrier': guerrier, 'paladin': paladin, 'mage': mage, 'rodeur': rodeur,
-           'druide': druide, 'lamerunique': lamerunique}
+           'druide': druide, 'lamerunique': lamerunique,
+           'gardeserment': gardeserment, 'sentinelle': sentinelle, 'arcaniste': arcaniste}
 
 
 def build(pack_oraxen):
-    """Écrit les modèles evo:item/casque3d_<classe> et repointe oraxen:<classe>_helmet dessus."""
+    """Écrit evo:item/casque3d_<classe><palier> et repointe oraxen:<classe><palier>_helmet dessus, pour chaque palier."""
     import json
+    import raretes
     tiles = []
-    for key, fn in CASQUES.items():
-        it = fn()
-        out = it.save()
-        name, img, els, disp = out['']
-        prev = fn()                      # aperçu : le casque posé sur une tête
-        prev.box((4, 4, 4), (12, 12, 12), 'skin')
-        prev.box((5, 7, 3.98), (6.6, 8, 4), 'slit')
-        prev.box((9.4, 7, 3.98), (11, 8, 4), 'slit')
-        pimg, pels = prev.build()
-        for r in ([15, 160, 0], [15, 210, 0]):
-            d = {'gui': {'rotation': r, 'translation': [0, -2, 0], 'scale': [0.55] * 3}}
-            tiles.append((key, render(pimg, pels, d, 240)))
-        with open(os.path.join(pack_oraxen, 'items', f'{key}_helmet.json'), 'w') as f:
-            json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{key}'}}, f, separators=(',', ':'))
-    cols = 4
+    for tier in raretes.TIERS:
+        sfx = raretes.SUFFIX[tier]
+        with raretes.palier(tier):
+            for key, fn in CASQUES.items():
+                it = fn()
+                it.id += sfx
+                raretes.adorn_helmet(it, key, tier)
+                it.save()
+                prev = fn()                      # aperçu : le casque posé sur une tête
+                raretes.adorn_helmet(prev, key, tier)
+                prev.box((4, 4, 4), (12, 12, 12), 'skin')
+                prev.box((5, 7, 3.98), (6.6, 8, 4), 'slit')
+                prev.box((9.4, 7, 3.98), (11, 8, 4), 'slit')
+                pimg, pels = prev.build()
+                d = {'gui': {'rotation': [15, 160, 0], 'translation': [0, -2, 0], 'scale': [0.55] * 3}}
+                tiles.append((key + sfx, render(pimg, pels, d, 240)))
+                with open(os.path.join(pack_oraxen, 'items', f'{key}{sfx}_helmet.json'), 'w') as f:
+                    json.dump({'model': {'type': 'minecraft:model', 'model': f'evo:item/casque3d_{key}{sfx}'}}, f,
+                              separators=(',', ':'))
+    cols = len(CASQUES)
     rows = (len(tiles) + cols - 1) // cols
     sheet = Image.new('RGBA', (cols * 250, rows * 262), (56, 58, 66, 255))
     d = ImageDraw.Draw(sheet)

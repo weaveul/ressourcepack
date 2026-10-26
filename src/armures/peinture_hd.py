@@ -12,6 +12,7 @@ sys.path.insert(0, os.path.join(HERE, '..', 'items'))
 sys.path.insert(0, HERE)
 from PIL import Image  # noqa: E402
 from kit import Mat, MATS, h, mix  # noqa: E402
+import raretes  # noqa: E402
 import casques3d  # noqa: E402,F401  (matériaux des casques, réutilisés pour assortir)
 from casques3d import hammered, brushed, filigree, runes_glow, cloth_folds, starry, leather, fur, bark_grain, leaves  # noqa: E402
 
@@ -443,8 +444,192 @@ def lamerunique(F):
         F.clear(0, 0, W, 18)
 
 
+# --- Panoplies multiclasses -------------------------------------------------------------------------------------
+MATS.update({
+    'gs_steel': Mat((96, 102, 116), 6, 0.72, pattern=hammered, hi=(170, 178, 196)),
+    'gs_steel_d': Mat((66, 70, 82), 6, 0.74, pattern=brushed),
+    'gs_gold': Mat((214, 168, 70), 6, 0.74, pattern=filigree, hi=(255, 230, 150)),
+    'gs_red': Mat((128, 28, 34), 6, 0.84, pattern=cloth_folds),
+    'gs_blue': Mat((36, 56, 124), 6, 0.84, pattern=cloth_folds),
+    'sn_cloak': Mat((46, 72, 50), 6, 0.86, pattern=cloth_folds),
+    'sn_cloak_d': Mat((32, 50, 36), 6, 0.86, pattern=cloth_folds),
+    'sn_leather': Mat((92, 62, 38), 6, 0.78, pattern=leather_soft),
+    'ar_robe': Mat((44, 30, 70), 6, 0.86, pattern=cloth_folds),
+    'ar_robe_l': Mat((70, 48, 110), 6, 0.86, pattern=starry),
+    'ar_rune': Mat((90, 220, 255), 4, 0.95, light=13, hi=(220, 250, 255)),
+})
+
+
+def gardeserment(F):
+    """Garde-serment (Guerrier, Paladin) : acier bruni, or, tabard écartelé rouge et bleu."""
+    p, W, H = F.part, F.w, F.h
+    if p == 'body':
+        if F.cap:
+            F.rows(0, H, 'gs_steel'); return
+        F.rows(0, 15, 'gs_steel')
+        F.rows(0, 2, 'gs_gold')
+        F.rows(15, 17, 'gs_gold')
+        F.rows(17, 24, 'chain_d')
+        if F.front or F.back:
+            half = W // 2
+            F.rect(2, 3, half, 9, 'gs_red'); F.rect(half, 3, W - 2, 9, 'gs_blue')       # écartelé
+            F.rect(2, 9, half, 15, 'gs_blue'); F.rect(half, 9, W - 2, 15, 'gs_red')
+            F.rect(2, 8, W - 2, 10, 'gs_gold', bevel=False)
+            F.rect(half - 1, 3, half + 1, 15, 'gs_gold', bevel=False)
+            if F.front:
+                F.rect(half - 2, 7, half + 2, 11, 'gs_gold')                           # écu au centre
+                F.rect(half - 1, 8, half + 1, 10, 'pa_holy')
+                F.rect(3, 17, W - 3, 24, 'gs_blue')
+                F.rect(3, 22, W - 3, 24, 'gs_gold')
+        else:
+            for y in (5, 10):
+                F.rect(0, y, W, y + 1, 'gs_steel_d', bevel=False)
+            F.rivet(W // 2, 3)
+    elif p == 'arm':
+        if F.face == 'bottom':
+            F.rows(0, H, 'gs_steel'); return
+        F.rows(0, 9, 'gs_steel')                         # épaulière à trois lames
+        for y in (0, 3, 6):
+            F.rows(y, y + 1, 'gs_gold', bevel=False)
+        F.rows(9, 15, 'chain_d')
+        F.rows(15, 24, 'gs_steel_d')
+        F.rows(15, 16, 'gs_gold', bevel=False)
+        F.rows(22, 24, 'gs_gold')
+        if not F.cap:
+            F.rivet(2, 11); F.rivet(W - 3, 11)
+    elif p == 'boot':
+        if F.cap:
+            F.rows(0, H, 'gs_steel'); return
+        F.rows(14, 24, 'gs_steel')
+        F.rows(14, 16, 'gs_gold')
+        F.rows(19, 20, 'gs_steel_d', bevel=False)
+        if F.front:
+            F.rect(1, 21, W - 1, 24, 'gs_gold')
+        F.clear(0, 0, W, 14)
+    elif p == 'leg':
+        F.rows(0, 18, 'chain_d')
+        F.rows(0, 2, 'belt')
+        if F.front or F.side:
+            F.rect(0, 3, W, 8, 'gs_steel')               # tassette
+            F.rect(0, 9, W, 14, 'gs_steel')              # genouillère
+            F.rect(W // 2 - 1, 10, W // 2 + 1, 13, 'gs_gold')
+        F.clear(0, 18, W, H)
+    elif p == 'waist':
+        F.rows(18, 24, 'chain_d')
+        F.rows(18, 20, 'gs_gold')
+        F.clear(0, 0, W, 18)
+
+
+def sentinelle(F):
+    """Sentinelle des bois (Rôdeur, Druide) : cuir, mantelet de feuilles, écorce, fermoir d'ambre."""
+    p, W, H = F.part, F.w, F.h
+    if p == 'body':
+        if F.cap:
+            F.rows(0, H, 'dr_leafy'); return
+        F.rows(0, 24, 'sn_cloak', bevel=False)
+        F.rows(0, 3, 'dr_leafy')
+        if F.front:
+            F.rect(3, 3, W - 3, 16, 'sn_leather')         # justaucorps de cuir
+            F.rect(W // 2, 3, W // 2 + 1, 16, 'leather_hd_d', bevel=False)
+            for y in range(5, 16, 3):
+                F.px(W // 2 - 1, y, (210, 190, 130)); F.px(W // 2 + 1, y, (210, 190, 130))
+            F.rect(W // 2 - 2, 3, W // 2 + 2, 6, 'dr_amber')   # fermoir d'ambre
+            F.rect(4, 7, 7, 13, 'dr_bark')                 # plastron d'écorce
+            F.rect(W - 7, 7, W - 4, 13, 'dr_bark')
+        if F.back:
+            F.rect(2, 3, W - 2, 22, 'sn_cloak_d')          # cape
+            for y in range(6, 22, 5):
+                F.rect(2, y, W - 2, y + 1, 'dr_leafy', bevel=False)
+        F.rows(16, 18, 'belt')
+        if F.front:
+            F.rect(W // 2 - 1, 16, W // 2 + 1, 18, 'dr_amber')
+            F.rect(1, 18, 5, 22, 'ro_pouch')
+    elif p == 'arm':
+        if F.face == 'bottom':
+            F.rows(0, H, 'sn_leather'); return
+        F.rows(0, 24, 'sn_cloak', bevel=False)
+        F.rows(0, 5, 'dr_leafy')                          # feuilles à l'épaule
+        F.rows(13, 22, 'dr_bark')                         # brassard d'écorce lacé
+        F.rows(15, 16, 'belt', bevel=False)
+        F.rows(19, 20, 'belt', bevel=False)
+        F.rows(22, 24, 'sn_leather')
+    elif p == 'boot':
+        if F.cap:
+            F.rows(0, H, 'sn_leather'); return
+        F.rows(13, 24, 'sn_leather')
+        F.rows(12, 15, 'ro_fur')
+        F.rows(18, 21, 'dr_bark')
+        F.rows(22, 24, 'leather_hd_d')
+        F.clear(0, 0, W, 12)
+    elif p == 'leg':
+        F.rows(0, 18, 'sn_cloak_d', bevel=False)
+        if F.front or F.side:
+            F.rect(1, 5, W - 1, 12, 'sn_leather')
+            F.rect(1, 7, W - 1, 8, 'dr_leafy', bevel=False)
+        F.clear(0, 18, W, H)
+    elif p == 'waist':
+        F.rows(18, 24, 'sn_cloak_d', bevel=False)
+        F.rows(18, 20, 'belt')
+        F.clear(0, 0, W, 18)
+
+
+def arcaniste(F):
+    """Arcaniste de guerre (Mage, Lame-runique) : robe violette, plaques d'acier sombre, runes d'azur."""
+    p, W, H = F.part, F.w, F.h
+    if p == 'body':
+        if F.cap:
+            F.rows(0, H, 'lr_plate'); return
+        F.rows(0, 24, 'ar_robe', bevel=False)
+        F.rows(0, 2, 'lr_silver')
+        if F.front or F.back:
+            F.rect(2, 2, W - 2, 12, 'lr_plate')           # plastron d'acier sombre
+            F.rect(2, 12, W - 2, 13, 'lr_silver', bevel=False)
+            if F.front:
+                cx = W // 2                                # cercle runique
+                for (dx, dy) in ((-2, 0), (-1, -1), (0, -2), (1, -2), (2, -1), (3, 0), (3, 1), (2, 2), (1, 3),
+                                 (0, 3), (-1, 2), (-2, 1)):
+                    F.px(cx + dx - 1, 7 + dy - 1, (110, 230, 255))
+                F.rect(cx - 1, 6, cx + 1, 8, 'ar_rune')
+                F.rect(cx - 1, 13, cx + 1, 24, 'ar_robe_l')   # ouverture de la robe
+            else:
+                F.rect(W // 2 - 1, 4, W // 2 + 1, 10, 'ar_rune', bevel=False)
+        F.rows(14, 16, 'ma_sash')
+    elif p == 'arm':
+        if F.face == 'bottom':
+            F.rows(0, H, 'ar_robe'); return
+        F.rows(0, 24, 'ar_robe', bevel=False)
+        F.rows(0, 7, 'lr_plate')                          # spalière
+        F.rows(6, 7, 'lr_silver', bevel=False)
+        F.rows(17, 22, 'ar_robe_l')
+        F.rows(22, 24, 'lr_silver')
+        if not F.cap:
+            F.rect(W // 2 - 1, 2, W // 2 + 1, 5, 'ar_rune')
+            F.rect(W // 2 - 1, 19, W // 2 + 1, 20, 'ar_rune', bevel=False)
+    elif p == 'boot':
+        if F.cap:
+            F.rows(0, H, 'lr_plate'); return
+        F.rows(14, 24, 'lr_plate_d')
+        F.rows(14, 15, 'lr_silver', bevel=False)
+        if F.front:
+            F.rect(W // 2 - 1, 17, W // 2 + 1, 20, 'ar_rune')
+        F.rows(22, 24, 'lr_silver')
+        F.clear(0, 0, W, 14)
+    elif p == 'leg':
+        F.rows(0, 18, 'ar_robe', bevel=False)
+        F.rows(14, 17, 'ar_robe_l')
+        F.rows(17, 18, 'lr_silver', bevel=False)
+        if F.front or F.side:
+            F.rect(1, 6, W - 1, 11, 'lr_plate')
+            F.rect(W // 2 - 1, 7, W // 2 + 1, 10, 'ar_rune')
+        F.clear(0, 18, W, H)
+    elif p == 'waist':
+        F.rows(18, 24, 'ar_robe', bevel=False)
+        F.rows(18, 20, 'ma_sash')
+        F.clear(0, 0, W, 18)
+
+
 PAINTERS = {'guerrier': guerrier, 'paladin': paladin, 'mage': mage, 'rodeur': rodeur, 'druide': druide,
-            'lamerunique': lamerunique}
+            'lamerunique': lamerunique, 'gardeserment': gardeserment, 'sentinelle': sentinelle, 'arcaniste': arcaniste}
 
 
 def faces(u, v, w, hh, d):
@@ -455,32 +640,39 @@ def faces(u, v, w, hh, d):
 BODY, ARM, LEG = (16, 16, 8, 12, 4), (40, 16, 4, 12, 4), (0, 16, 4, 12, 4)
 
 
-def paint_box(layer, key, box, part, seed, skip=()):
+def paint_box(layer, key, box, part, seed, skip=(), tier='rare'):
     for name, (x, y, w, hh) in faces(*box).items():
         if name in skip:
             continue
         F = Face(part, name, w * K, hh * K, seed)
         PAINTERS[key](F)
+        raretes.trim_face(F, tier)
         layer.alpha_composite(F.img, (x * K, y * K))
 
 
-def layers_hd(key):
+def layers_hd(key, tier='rare'):
+    """Calques 1 et 2 de la panoplie, au palier de rareté donné (raretes.TIERS)."""
+    with raretes.palier(tier):
+        return _layers_hd(key, tier)
+
+
+def _layers_hd(key, tier):
     l1 = Image.new('RGBA', (64 * K, 32 * K), (0, 0, 0, 0))
-    paint_box(l1, key, BODY, 'body', 2)
-    paint_box(l1, key, ARM, 'arm', 3)
-    paint_box(l1, key, LEG, 'boot', 4, skip=('top',))
+    paint_box(l1, key, BODY, 'body', 2, tier=tier)
+    paint_box(l1, key, ARM, 'arm', 3, tier=tier)
+    paint_box(l1, key, LEG, 'boot', 4, skip=('top',), tier=tier)
     l2 = Image.new('RGBA', (64 * K, 32 * K), (0, 0, 0, 0))
-    paint_box(l2, key, BODY, 'waist', 5, skip=('top', 'bottom'))
-    paint_box(l2, key, LEG, 'leg', 6, skip=('top', 'bottom'))
+    paint_box(l2, key, BODY, 'waist', 5, skip=('top', 'bottom'), tier=tier)
+    paint_box(l2, key, LEG, 'leg', 6, skip=('top', 'bottom'), tier=tier)
     return l1, l2
 
 
-def preview(keys):
+def preview(keys, tier='rare'):
     """Mannequins de face et de dos (casque 3D non représenté)."""
     S = 6
     sheet = Image.new('RGBA', (len(keys) * 2 * 18 * K * S // 2 + 20, 36 * K * S // 2 + 20), (40, 42, 48, 255))
     for n, key in enumerate(keys):
-        l1, l2 = layers_hd(key)
+        l1, l2 = layers_hd(key, tier)
         for v, side in enumerate(('front', 'back')):
             fig = Image.new('RGBA', (16 * K, 32 * K), (0, 0, 0, 0))
             for (x, y, w, hh) in ((4, 0, 8, 8), (4, 8, 8, 12), (0, 8, 4, 12), (12, 8, 4, 12), (4, 20, 4, 12), (8, 20, 4, 12)):
@@ -522,9 +714,9 @@ def _outline(img):
     return out
 
 
-def icons_hd(key):
+def icons_hd(key, tier='rare', layers=None):
     """Icônes 32x32 tirées des calques peints : plastron, jambières, bottes (le casque est modelé en 3D)."""
-    l1, l2 = layers_hd(key)
+    l1, l2 = layers or layers_hd(key, tier)
     chest = Image.new('RGBA', (32, 32), (0, 0, 0, 0))
     arm = _front(l1, ARM).crop((0, 0, 8, 18))
     chest.alpha_composite(arm, (1, 4))
