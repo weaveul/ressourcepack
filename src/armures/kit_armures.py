@@ -138,14 +138,16 @@ def palette(name):
 #  Casques : coques
 # ==================================================================================================================
 
-def _shell(it, m, y0=3.6, y1=12.4, front=True):
-    it.box((S, y0, S + (0 if front else 0.6)), (E, y1, E), m)
+def _shell(it, m, y0=3.6, y1=12.6, front=True):  # y1 > 12.5 : couvre le dessus du calque « chapeau »
+    # coque ouverte : sa face avant passe DERRIÈRE le visage (z 4.6), sinon elle coïncide avec la peau (z 4.0)
+    # et le visage clignote à travers selon l'angle.
+    it.box((S, y0, S + (0 if front else 1.2)), (E, y1, E), m)
     if not front:
-        it.box((S, y0, S), (S + 0.6, y1, S + 0.6), m)
+        it.box((S, y0, S), (S + 0.6, y1, S + 1.2), m)
     it.box((S + 0.6, y1, S + 0.6), (E - 0.6, y1 + 0.8, E - 0.6), m)
 
 
-def _dome(it, m, y0, top=12.4, steps=3):
+def _dome(it, m, y0, top=12.6, steps=3):
     it.box((S, y0, S), (E, top, E), m)
     for i in range(1, steps + 1):
         d = 0.7 * i
@@ -188,7 +190,7 @@ def base_salade(it, c):
     it.box((S - 0.2, 7.0, S - 0.8), (E + 0.2, 10.4, S), c['m'])                  # visière bombée
     it.box((S - 0.2, 10.4, S - 0.8), (E + 0.2, 11.0, S), c['t'])
     it.box((S + 0.4, 5.6, E), (E - 0.4, 11.4, E + 1.8), c['m'])                  # queue
-    it.box((S, 3.6, S + 0.6), (E, 6.4, E), c['l'])                               # gorgerin
+    it.box((S, 3.6, S + 1.2), (E, 6.4, E), c['l'])                               # gorgerin (derrière le visage)
 
 
 def base_barbute(it, c):
@@ -206,7 +208,7 @@ def base_bassinet(it, c):
 
 
 def base_chapel(it, c):
-    _dome(it, c['m'], 9.4, 12.4, 3)
+    _dome(it, c['m'], 9.4, 12.6, 3)
     it.box((1.6, 9.4, 1.6), (14.4, 10.0, 14.4), c['m'])                          # bord
     it.box((1.4, 9.2, 1.4), (14.6, 9.4, 14.6), c['t'])
     it.box((S, 3.6, 10.8), (E, 9.4, E), c['l'])
@@ -234,7 +236,7 @@ def base_masque(it, c):
 
 def base_cercle(it, c):
     it.box((S - 0.2, 10.4, S - 0.2), (E + 0.2, 11.6, E + 0.2), c['t'])
-    it.box((S + 0.2, 11.6, S + 0.2), (E - 0.2, 12.2, E - 0.2), c['m'])
+    it.box((S, 11.6, S), (E, 12.2, E), c['m'])                                  # hors du calque « chapeau » du skin
 
 
 def base_chapeau(it, c):
@@ -249,7 +251,7 @@ def base_chapeau(it, c):
 
 
 def base_coiffe(it, c):
-    _dome(it, c['m'], 9.0, 12.4, 3)
+    _dome(it, c['m'], 9.0, 12.6, 3)
     it.box((S, 5.4, 10.6), (E, 9.0, E), c['m'])                                  # rabat sur la nuque
     it.box((S, 6.8, S + 0.6), (S + 0.6, 9.0, 10.6), c['m'])
     it.box((E - 0.6, 6.8, S + 0.6), (E, 9.0, 10.6), c['m'])
@@ -269,7 +271,7 @@ def base_bete(it, c):
 
 def base_turban(it, c):
     for i in range(4):
-        d = 0.35 * i
+        d = 0.2 * i                     # les tours sous y 12.5 restent hors du calque « chapeau » du skin
         it.box((S - 0.4 + d, 9.4 + i * 0.9, S - 0.4 + d), (E + 0.4 - d, 10.4 + i * 0.9, E + 0.4 - d),
                c['m'] if i % 2 == 0 else c['l'])
     it.box((7.2, 11.0, S - 0.8), (8.8, 12.6, S - 0.3), c['t'])
@@ -861,7 +863,7 @@ def helmet(key, tier, variant):
     if sd != '-':
         side(it, sd, c)
     if tp != '-':
-        y = {'chapel': 12.8, 'calotte': 13.4, 'coiffe': 13.4, 'cercle': 12.2, 'turban': 13.0, 'bete': 13.6}.get(base, 12.6)
+        y = {'chapel': 13.0, 'calotte': 13.4, 'coiffe': 13.6, 'cercle': 12.2, 'turban': 13.0, 'bete': 13.6}.get(base, 12.8)
         if base == 'chapeau' and tp not in ('gemme',):
             y = 13.2
         top(it, tp, c, y)
