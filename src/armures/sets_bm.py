@@ -21,7 +21,7 @@ K = 0.9375                      # pixel de skin -> unité du modèle
 HEAD_C = (0.0, 26.25, 0.0)      # centre de la tête
 
 # os d'armure -> os du skin qui le porte
-PARENT = {'ar_tete': 'h_ph_head', 'ar_torse': 'pc_chest', 'ar_cape': 'pc_chest', 'ar_taille': 'pw_waist',
+PARENT = {'ar_tete': 'hi_ph_head', 'ar_torse': 'pc_chest', 'ar_cape': 'pc_chest', 'ar_taille': 'pw_waist',
           'ar_hanches': 'phip_hip', 'ar_epaule_d': 'pra_right_arm', 'ar_epaule_g': 'pla_left_arm',
           'ar_avb_d': 'prfa_right_forearm', 'ar_avb_g': 'plfa_left_forearm', 'ar_cuisse_d': 'prl_right_leg',
           'ar_cuisse_g': 'pll_left_leg', 'ar_jambe_d': 'prfl_right_foreleg', 'ar_jambe_g': 'plfl_left_foreleg'}
@@ -63,34 +63,34 @@ def guerrier_legendaire():
 
     # --- torse : cuirasse en proue, gorgerin, gemme de braise, dossière
     x.bone = 'ar_torse'
-    x.b((-4.3, 18.4, -2.5), (4.3, 22.7, 2.5), st)
-    x.m((-4.5, 18.5, -3.1), (0.2, 22.6, -2.5), st2, R('y', 22.5, (0, 0, -2.5)))
-    x.b((-0.6, 18.3, -3.6), (0.6, 22.8, -2.6), gd)
-    x.m((-4.6, 22.2, -3.2), (-0.4, 22.8, -2.4), gd, R('y', 22.5, (0, 0, -2.5)))
-    x.b((-0.9, 20.0, -3.9), (0.9, 21.6, -3.5), ey)
-    x.b((-3.4, 22.4, -2.7), (3.4, 23.7, 2.7), gd)                            # gorgerin
-    x.b((-4.2, 18.6, 2.5), (4.2, 22.6, 3.0), st2)
-    x.b((-0.5, 18.6, 3.0), (0.5, 22.6, 3.3), gd)
+    x.b((-4.05, 18.6, -2.25), (4.05, 22.6, 2.2), st)
+    x.m((-4.1, 18.7, -2.75), (0.2, 22.5, -2.25), st2, R('y', 22.5, (0, 0, -2.25)))
+    x.b((-0.55, 18.5, -3.2), (0.55, 22.7, -2.3), gd)
+    x.m((-4.15, 22.0, -2.85), (-0.4, 22.5, -2.2), gd, R('y', 22.5, (0, 0, -2.25)))
+    x.b((-0.8, 20.0, -3.45), (0.8, 21.5, -3.15), ey)
+    x.b((-3.0, 22.4, -2.4), (3.0, 23.3, 2.4), gd)                            # gorgerin
+    x.b((-3.9, 18.8, 2.2), (3.9, 22.5, 2.6), st2)
+    x.b((-0.45, 18.8, 2.6), (0.45, 22.5, 2.85), gd)
     # --- cape rouge
     x.bone = 'ar_cape'
-    x.b((-4.0, 9.0, 3.2), (4.0, 22.8, 3.7), rd)
-    x.b((-4.1, 22.0, 3.0), (4.1, 23.0, 3.9), gd)
-    x.b((-4.0, 9.0, 3.1), (4.0, 9.5, 3.8), gd)
+    x.b((-4.3, 4.0, 2.9), (4.3, 22.6, 3.3), rd)
+    x.b((-4.4, 21.8, 2.7), (4.4, 22.8, 3.5), gd)
+    x.b((-4.3, 4.0, 2.85), (4.3, 4.5, 3.35), gd)
     # --- taille : plaques de ventre, ceinture, boucle
     x.bone = 'ar_taille'
-    x.b((-4.0, 15.6, -2.4), (4.0, 18.5, 2.4), st)
-    x.b((-4.1, 17.0, -2.6), (4.1, 17.5, 2.6), gd)
-    x.b((-4.25, 14.8, -2.7), (4.25, 15.9, 2.7), lt)
-    x.b((-1.0, 14.6, -3.1), (1.0, 16.1, -2.6), gd)
+    x.b((-3.95, 15.8, -2.15), (3.95, 18.55, 2.1), st)
+    x.b((-4.0, 17.1, -2.25), (4.0, 17.5, 2.2), gd)
+    x.b((-4.1, 14.9, -2.3), (4.1, 15.9, 2.3), lt)
+    x.b((-0.9, 14.7, -2.65), (0.9, 16.1, -2.25), gd)
     # --- hanches : tassettes, tabard rouge
     x.bone = 'ar_hanches'
-    x.b((-4.0, 13.0, -2.8), (4.0, 14.9, -2.3), st2)
-    x.b((-3.7, 11.4, -3.0), (3.7, 13.2, -2.5), st)
-    x.b((-1.7, 5.4, -3.3), (1.7, 14.6, -2.9), rd)
-    x.b((-1.9, 5.0, -3.4), (1.9, 5.5, -2.8), gd)
-    x.b((-1.7, 6.0, 2.6), (1.7, 14.6, 3.0), rd)
-    x.m((-4.5, 9.8, -2.4), (-3.4, 14.8, 2.4), st2, R('z', -22.5, (-3.9, 14.8, 0)))
-    x.m((-4.6, 9.6, -2.5), (-3.3, 10.1, 2.5), gd, R('z', -22.5, (-3.9, 14.8, 0)))
+    x.b((-3.9, 13.1, -2.5), (3.9, 14.9, -2.05), st2)
+    x.b((-3.6, 11.6, -2.7), (3.6, 13.3, -2.25), st)
+    x.b((-1.6, 5.4, -3.0), (1.6, 14.6, -2.65), rd)
+    x.b((-1.8, 5.0, -3.1), (1.8, 5.5, -2.6), gd)
+    x.b((-1.6, 6.0, 2.2), (1.6, 14.6, 2.55), rd)
+    x.m((-4.3, 10.4, -2.1), (-3.6, 14.8, 2.1), st2, R('z', -22.5, (-3.9, 14.8, 0)))
+    x.m((-4.35, 10.2, -2.15), (-3.55, 10.6, 2.15), gd, R('z', -22.5, (-3.9, 14.8, 0)))
 
     for s in (1, -1):
         d = 'd' if s > 0 else 'g'
@@ -115,25 +115,25 @@ def guerrier_legendaire():
         for z in (-2.0, 0.0, 2.0):
             x.limb((6.6 * s, 25.2, z), [(1.8, -22.5 * s, 1.1), (1.6, -22.5 * s, 0.8), (1.2, 0, 0.45)], [gd, hn, hn],
                    plane='xy', depth=1.0)
-        bx(3.6, 16.9, -2.2, 7.9, 18.4, 2.2, st)                                # brassard
+        bx(3.55, 17.3, -2.1, 7.75, 18.4, 2.1, st)                                # brassard
         # --- canon d'avant-bras, gantelet évasé, ailerons
         x.bone = f'ar_avb_{d}'
-        bx(3.4, 12.2, -2.2, 7.9, 16.7, 2.2, st)
-        bx(3.3, 15.4, -2.35, 8.0, 15.9, 2.35, gd)
-        bx(3.1, 11.0, -2.6, 8.2, 12.5, 2.6, st2)
-        bx(3.0, 12.4, -2.7, 8.3, 12.8, 2.7, gd)
-        x.limb((7.9 * s, 13.0, 0), [(1.4, -45 * s, 1.0), (1.2, -22.5 * s, 0.6)], [st2, gd], plane='xy', depth=0.4)
+        bx(3.5, 12.4, -2.1, 7.75, 16.2, 2.1, st)
+        bx(3.45, 15.6, -2.2, 7.8, 16.0, 2.2, gd)
+        bx(3.3, 11.1, -2.4, 7.95, 12.5, 2.4, st2)
+        bx(3.25, 12.4, -2.45, 8.0, 12.75, 2.45, gd)
+        x.limb((7.75 * s, 13.2, 0), [(1.2, -45 * s, 0.9), (1.0, -22.5 * s, 0.5)], [st2, gd], plane='xy', depth=0.4)
         # --- cuissard, genouillère à pointe, grève, soleret
         x.bone = f'ar_cuisse_{d}'
-        bx(-0.25, 6.2, -2.3, 4.1, 11.1, 2.3, st)
-        bx(-0.3, 9.6, -2.45, 4.15, 10.1, 2.45, gd)
+        bx(-0.1, 6.4, -2.2, 3.95, 11.0, 2.05, st)
+        bx(-0.15, 9.7, -2.3, 4.0, 10.1, 2.1, gd)
         x.bone = f'ar_jambe_{d}'
-        bx(-0.3, 4.4, -2.9, 4.15, 6.6, -1.9, st2)
-        x.limb((1.9 * s, 5.4, -2.9), [(1.0, -90, 0.8), (0.6, -90, 0.4)], [gd], plane='zy')
-        bx(-0.25, 1.2, -2.3, 4.05, 5.8, 2.3, st)
-        bx(-0.3, 4.0, -2.45, 4.1, 4.4, 2.45, gd)
-        bx(-0.35, 0.0, -3.4, 4.15, 1.4, 2.4, st2)
-        bx(0.6, 0.0, -3.7, 3.2, 1.0, -3.3, gd)
+        bx(-0.1, 4.6, -2.6, 3.95, 6.4, -1.9, st2)
+        x.limb((1.9 * s, 5.5, -2.6), [(0.9, -90, 0.7), (0.5, -90, 0.35)], [gd], plane='zy')
+        bx(-0.1, 1.3, -2.15, 3.95, 4.9, 2.05, st)
+        bx(-0.15, 4.5, -2.25, 4.0, 4.9, 2.1, gd)
+        bx(-0.2, 0.0, -3.1, 4.05, 1.4, 2.15, st2)
+        bx(0.6, 0.0, -3.4, 3.2, 1.0, -3.05, gd)
     return x.it
 
 
@@ -146,38 +146,70 @@ SETS = {'guerrier_legendaire': guerrier_legendaire}
 
 def _kf(ch, t, v):
     return {'channel': ch, 'data_points': [{'x': str(v[0]), 'y': str(v[1]), 'z': str(v[2])}], 'uuid': U(),
-            'time': t, 'color': -1, 'interpolation': 'catmullrom'}
+            'time': round(t, 4), 'color': -1, 'interpolation': 'catmullrom'}
 
 
-def _anim(name, loop, length, tracks, gid):
+def _anim(name, loop, length, tracks, gid, pos=None):
     animators = {}
     for b, pts in tracks.items():
         animators[gid[b]] = {'name': b, 'type': 'bone', 'rotation_global': False, 'quaternion_interpolation': False,
                              'keyframes': [_kf('rotation', t, v) for t, v in pts]}
+    for b, pts in (pos or {}).items():
+        an = animators.setdefault(gid[b], {'name': b, 'type': 'bone', 'rotation_global': False,
+                                           'quaternion_interpolation': False, 'keyframes': []})
+        an['keyframes'] += [_kf('position', t, v) for t, v in pts]
     return {'uuid': U(), 'name': name, 'loop': loop, 'override': False, 'length': length, 'snapping': 24,
             'selected': False, 'group_name': '', 'anim_time_update': '', 'blend_weight': '', 'start_delay': '',
             'loop_delay': '', 'animators': animators}
 
 
+def wave(L, n, f):
+    """Échantillonne f(phase 0..1) en n+1 clés sur une boucle de L secondes."""
+    return [(L * i / n, f(i / n)) for i in range(n + 1)]
+
+
 def animations(gid):
-    sw = lambda a: [(0, (a, 0, 0)), (0.5, (-a, 0, 0)), (1.0, (a, 0, 0))]  # noqa: E731
-    walk = _anim('walk', 'loop', 1.0, {
-        'pra_right_arm': sw(28), 'pla_left_arm': sw(-28), 'prl_right_leg': sw(-30), 'pll_left_leg': sw(30),
-        'prfa_right_forearm': [(0, (-8, 0, 0)), (1.0, (-8, 0, 0))],
-        'plfa_left_forearm': [(0, (-8, 0, 0)), (1.0, (-8, 0, 0))],
-        'prfl_right_foreleg': [(0, (0, 0, 0)), (0.25, (20, 0, 0)), (0.5, (0, 0, 0)), (1.0, (0, 0, 0))],
-        'plfl_left_foreleg': [(0, (0, 0, 0)), (0.5, (0, 0, 0)), (0.75, (20, 0, 0)), (1.0, (0, 0, 0))],
-        'ar_cape': [(0, (8, 0, 0)), (0.5, (12, 0, 0)), (1.0, (8, 0, 0))]}, gid)
-    idle = _anim('idle', 'loop', 2.0, {
-        'pc_chest': [(0, (0, 0, 0)), (1.0, (-1.5, 0, 0)), (2.0, (0, 0, 0))],
-        'pra_right_arm': [(0, (0, 0, 3)), (1.0, (0, 0, 5)), (2.0, (0, 0, 3))],
-        'pla_left_arm': [(0, (0, 0, -3)), (1.0, (0, 0, -5)), (2.0, (0, 0, -3))],
-        'ar_cape': [(0, (3, 0, 0)), (1.0, (5, 0, 0)), (2.0, (3, 0, 0))]}, gid)
-    attack = _anim('attack', 'once', 0.5, {
-        'pra_right_arm': [(0, (0, 0, 0)), (0.12, (-125, 0, 10)), (0.28, (25, 0, -5)), (0.5, (0, 0, 0))],
-        'prfa_right_forearm': [(0, (0, 0, 0)), (0.12, (-20, 0, 0)), (0.5, (0, 0, 0))],
-        'pc_chest': [(0, (0, 0, 0)), (0.12, (0, 12, 0)), (0.28, (8, -15, 0)), (0.5, (0, 0, 0))]}, gid)
-    return [idle, walk, attack]
+    L = 0.9                                         # un pas complet (gauche + droite)
+    c = lambda p: math.cos(2 * math.pi * p)         # noqa: E731
+    sn = lambda p: math.sin(2 * math.pi * p)        # noqa: E731
+    kn = lambda p: max(0.0, sn(p)) ** 1.5           # noqa: E731  genou : se plie quand la jambe revient
+    walk = _anim('walk', 'loop', L, {
+        'prl_right_leg': wave(L, 8, lambda p: (-32 * c(p), 0, 0)),
+        'pll_left_leg': wave(L, 8, lambda p: (32 * c(p), 0, 0)),
+        'prfl_right_foreleg': wave(L, 8, lambda p: (6 + 42 * kn(p + 0.0), 0, 0)),
+        'plfl_left_foreleg': wave(L, 8, lambda p: (6 + 42 * kn(p + 0.5), 0, 0)),
+        'pra_right_arm': wave(L, 8, lambda p: (26 * c(p), 0, 3)),
+        'pla_left_arm': wave(L, 8, lambda p: (-26 * c(p), 0, -3)),
+        'prfa_right_forearm': wave(L, 8, lambda p: (-12 - 16 * max(0.0, -c(p)), 0, 0)),
+        'plfa_left_forearm': wave(L, 8, lambda p: (-12 - 16 * max(0.0, c(p)), 0, 0)),
+        'pc_chest': wave(L, 8, lambda p: (-3, 6 * c(p), 0)),
+        'phip_hip': wave(L, 8, lambda p: (0, -5 * c(p), 0)),
+        'ar_cape': wave(L, 8, lambda p: (14 + 5 * sn(2 * p), 0, 0)),
+    }, gid, pos={'player_root': wave(L, 8, lambda p: (0, 0.55 * abs(sn(p)), 0))})
+    idle = _anim('idle', 'loop', 3.0, {
+        'pc_chest': wave(3.0, 6, lambda p: (-1.8 * (1 - c(p)) / 2, 0, 0)),
+        'pra_right_arm': wave(3.0, 6, lambda p: (-2, 0, 3 + 2 * (1 - c(p)) / 2)),
+        'pla_left_arm': wave(3.0, 6, lambda p: (-2, 0, -3 - 2 * (1 - c(p)) / 2)),
+        'prfa_right_forearm': [(0, (-6, 0, 0)), (3.0, (-6, 0, 0))],
+        'plfa_left_forearm': [(0, (-6, 0, 0)), (3.0, (-6, 0, 0))],
+        'ar_cape': wave(3.0, 6, lambda p: (4 + 2 * sn(p), 0, 0)),
+    }, gid, pos={'player_root': wave(3.0, 6, lambda p: (0, -0.15 * (1 - c(p)) / 2, 0))})
+    attack = _anim('attack', 'once', 0.45, {
+        'pra_right_arm': [(0, (0, 0, 0)), (0.1, (-130, -10, 12)), (0.22, (20, 15, -8)), (0.45, (0, 0, 0))],
+        'prfa_right_forearm': [(0, (0, 0, 0)), (0.1, (-25, 0, 0)), (0.22, (-5, 0, 0)), (0.45, (0, 0, 0))],
+        'pc_chest': [(0, (0, 0, 0)), (0.1, (-4, 14, 0)), (0.22, (8, -18, 0)), (0.45, (0, 0, 0))],
+        'pla_left_arm': [(0, (0, 0, 0)), (0.1, (-20, 0, -10)), (0.22, (15, 0, -5)), (0.45, (0, 0, 0))],
+    }, gid)
+    jump = _anim('jump', 'once', 0.5, {
+        'prl_right_leg': [(0, (0, 0, 0)), (0.15, (-25, 0, 0)), (0.5, (0, 0, 0))],
+        'pll_left_leg': [(0, (0, 0, 0)), (0.15, (10, 0, 0)), (0.5, (0, 0, 0))],
+        'prfl_right_foreleg': [(0, (0, 0, 0)), (0.15, (40, 0, 0)), (0.5, (0, 0, 0))],
+        'plfl_left_foreleg': [(0, (0, 0, 0)), (0.15, (30, 0, 0)), (0.5, (0, 0, 0))],
+        'pra_right_arm': [(0, (0, 0, 0)), (0.15, (-30, 0, 15)), (0.5, (0, 0, 0))],
+        'pla_left_arm': [(0, (0, 0, 0)), (0.15, (-30, 0, -15)), (0.5, (0, 0, 0))],
+        'ar_cape': [(0, (5, 0, 0)), (0.2, (35, 0, 0)), (0.5, (8, 0, 0))],
+    }, gid)
+    return [idle, walk, attack, jump]
 
 
 # ==================================================================================================================
@@ -190,6 +222,9 @@ def build(key):
     W = img.width
     d = json.load(open(STEVE))
     d['name'] = f'evo_{key}'
+    for g in d['groups']:
+        if g['name'] == 'h_ph_head':
+            g['name'] = 'hi_ph_head'       # hi_ : l'os ET ses enfants (casque) suivent le regard ; h_ = l'os seul
     groups = {g['name']: g for g in d['groups']}
     gid = {n: g['uuid'] for n, g in groups.items()}
     # noeuds de l'outliner par uuid de groupe
@@ -207,6 +242,8 @@ def build(key):
         pg = groups[parent]
         g = copy.deepcopy(pg)
         g.update({'uuid': U(), 'name': bone, 'rotation': [0, 0, 0], 'children': []})
+        if bone == 'ar_cape':
+            g['origin'] = [0, 22.6, 3.1]   # la cape pivote depuis les épaules
         d['groups'].append(g)
         gid[bone] = g['uuid']
         node = {'uuid': g['uuid'], 'isOpen': True, 'children': []}
