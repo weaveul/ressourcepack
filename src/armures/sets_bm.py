@@ -35,6 +35,17 @@ def U():
 #  Pièces
 # ==================================================================================================================
 
+ARM_FIX = {'pra_right_arm': (-0.625, -0.5), 'pla_left_arm': (0.625, -0.5),
+           'prfa_right_forearm': (-0.625, -0.375), 'plfa_left_forearm': (0.625, -0.375)}
+
+
+def _shift(e, dx, dy):
+    e['from'] = [e['from'][0] + dx, e['from'][1] + dy, e['from'][2]]
+    e['to'] = [e['to'][0] + dx, e['to'][1] + dy, e['to'][2]]
+    if e.get('origin'):
+        e['origin'] = [e['origin'][0] + dx, e['origin'][1] + dy, e['origin'][2]]
+
+
 def helmet_into(x, item):
     """Recopie les éléments d'un casque heaumes (repère casque) dans l'os de tête du modèle."""
     def tp(p):
@@ -149,7 +160,7 @@ def _kf(ch, t, v):
             'time': round(t, 4), 'color': -1, 'interpolation': 'catmullrom'}
 
 
-def _anim(name, loop, length, tracks, gid, pos=None):
+def _anim(name, loop, length, tracks, gid, pos=None, scale=None, override=False):
     animators = {}
     for b, pts in tracks.items():
         animators[gid[b]] = {'name': b, 'type': 'bone', 'rotation_global': False, 'quaternion_interpolation': False,
@@ -158,7 +169,11 @@ def _anim(name, loop, length, tracks, gid, pos=None):
         an = animators.setdefault(gid[b], {'name': b, 'type': 'bone', 'rotation_global': False,
                                            'quaternion_interpolation': False, 'keyframes': []})
         an['keyframes'] += [_kf('position', t, v) for t, v in pts]
-    return {'uuid': U(), 'name': name, 'loop': loop, 'override': False, 'length': length, 'snapping': 24,
+    for b, pts in (scale or {}).items():
+        an = animators.setdefault(gid[b], {'name': b, 'type': 'bone', 'rotation_global': False,
+                                           'quaternion_interpolation': False, 'keyframes': []})
+        an['keyframes'] += [_kf('scale', t, v) for t, v in pts]
+    return {'uuid': U(), 'name': name, 'loop': loop, 'override': override, 'length': length, 'snapping': 24,
             'selected': False, 'group_name': '', 'anim_time_update': '', 'blend_weight': '', 'start_delay': '',
             'loop_delay': '', 'animators': animators}
 
@@ -209,7 +224,11 @@ def animations(gid):
         'pla_left_arm': [(0, (0, 0, 0)), (0.15, (-30, 0, -15)), (0.5, (0, 0, 0))],
         'ar_cape': [(0, (5, 0, 0)), (0.2, (35, 0, 0)), (0.5, (8, 0, 0))],
     }, gid)
-    return [idle, walk, attack, jump]
+    # Jouée pour le seul porteur (animation par joueur) : casque et tête réduits à rien, sinon en vue FPS la caméra
+    # est à l'intérieur du casque. override : les autres os gardent l'animation commune pour lui aussi.
+    tiny = [(0, (0.01, 0.01, 0.01)), (1.0, (0.01, 0.01, 0.01))]
+    fps = _anim('fps', 'loop', 1.0, {}, gid, scale={'hi_ph_head': tiny, 'ar_tete': tiny}, override=True)
+    return [idle, walk, attack, jump, fps]
 
 
 # ==================================================================================================================
@@ -225,6 +244,35 @@ def build(key):
     for g in d['groups']:
         if g['name'] == 'h_ph_head':
             g['name'] = 'hi_ph_head'       # hi_ : l'os ET ses enfants (casque) suivent le regard ; h_ = l'os seul
+    # La cape du skin (os cape_cape) ferait doublon avec la cape de la panoplie.
+    cape = [g for g in d['groups'] if g['name'] == 'cape_cape']
+    if cape:
+        d['groups'].remove(cape[0])
+
+        def drop(lst):
+            for c in list(lst):
+                if isinstance(c, dict):
+                    if c['uuid'] == cape[0]['uuid']:
+                        lst.remove(c)
+                    else:
+                        drop(c['children'])
+        drop(d['outliner'])
+    # BetterModel dessine le skin des bras centré sur le pivot de l'os (bras : x 5, haut à y 22 ; avant-bras : haut à
+    # 16.5), alors que les cubes de steve.bbmodel sont décalés de 0.625 vers l'extérieur et 0.5 / 0.375 vers le haut.
+    # On recale les cubes du skin (pour l'aperçu) et l'armure des bras sur ce que le jeu affiche vraiment.
+    uuid_bone = {}
+
+    def own(lst, gname=None):
+        for c in lst:
+            if isinstance(c, dict):
+                own(c['children'], {g['uuid']: g['name'] for g in d['groups']}[c['uuid']])
+            else:
+                uuid_bone[c] = gname
+    own(d['outliner'])
+    for e in d['elements']:
+        dx, dy = ARM_FIX.get(uuid_bone.get(e['uuid']), (0, 0))
+        if dx or dy:
+            _shift(e, dx, dy)
     groups = {g['name']: g for g in d['groups']}
     gid = {n: g['uuid'] for n, g in groups.items()}
     # noeuds de l'outliner par uuid de groupe
@@ -276,6 +324,9 @@ def build(key):
             e['rotation'] = [r['angle'] if r['axis'] == a else 0 for a in 'xyz']
         if el.get('light_emission'):
             e['light_emission'] = el['light_emission']
+        dx, dy = ARM_FIX.get(PARENT[bone], (0, 0))
+        if dx or dy:
+            _shift(e, dx, dy)
         d['elements'].append(e)
         ar_nodes[bone]['children'].append(e['uuid'])
         n += 1
@@ -298,10 +349,30 @@ def preview(key, path):
     MATS['se_skin'] = Mat((150, 120, 100), 4, 0.9)
     item = SETS[key]()
     d = json.load(open(STEVE))
+    names = {g['uuid']: g['name'] for g in d['groups']}
+    owner = {}
+
+    def own(lst, gname=None):
+        for c in lst:
+            if isinstance(c, dict):
+                own(c['children'], names[c['uuid']])
+            else:
+                owner[c] = gname
+    own(d['outliner'])
     for e in d['elements']:
         if e['name'] == 'skin':
-            item.box(tuple(e['from']), tuple(e['to']), 'se_skin')
+            dx, dy = ARM_FIX.get(owner[e['uuid']], (0, 0))   # skin là où BetterModel le dessine
+            item.box((e['from'][0] + dx, e['from'][1] + dy, e['from'][2]),
+                     (e['to'][0] + dx, e['to'][1] + dy, e['to'][2]), 'se_skin')
     img, els = item.build()
+    for src, e in zip(item.els, els):
+        dx, dy = ARM_FIX.get(PARENT.get(src.get('bone')), (0, 0))
+        if dx or dy:
+            e['from'] = [e['from'][0] + dx, e['from'][1] + dy, e['from'][2]]
+            e['to'] = [e['to'][0] + dx, e['to'][1] + dy, e['to'][2]]
+            if e.get('rotation'):
+                o = e['rotation']['origin']
+                e['rotation'] = dict(e['rotation'], origin=[o[0] + dx, o[1] + dy, o[2]])
     for e in els:                                   # recentre la figure sur le repère du rendu
         for k in ('from', 'to'):
             e[k] = [e[k][0] + 8, e[k][1] - 9, e[k][2] + 8]
