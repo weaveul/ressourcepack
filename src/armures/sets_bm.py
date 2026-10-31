@@ -47,19 +47,28 @@ def _shift(e, dx, dy):
 
 
 def _eye_points():
-    """Positions de la caméra FPS dans le repère de la tête (pivot du cou y 22.5, oeil 3.42 plus haut). La tête suit
-    le regard, donc dans son repère la caméra ne bouge qu'avec le tangage (±90°) et regarde toujours vers -z."""
+    """Positions de la caméra FPS dans le repère de la tête (pivot du cou y 22.5). La tête suit le regard, donc dans
+    son repère la caméra ne bouge qu'avec le tangage : debout l'oeil est 3.42 au-dessus du cou ; accroupi (pose
+    « sneak ») il passe derrière le cou, 2.2 à 2.9 plus loin."""
     pts = []
-    for p in range(-90, 91, 10):
+    for p in range(-96, 97, 6):
         a = math.radians(p)
         pts.append((0.0, 22.5 + 3.42 * math.cos(a), 3.42 * math.sin(a)))
+    for r in (2.2, 2.55, 2.9):
+        for p in range(30, 131, 10):
+            a = math.radians(p)
+            for sg in (1, -1):
+                pts.append((0.0, 22.5 + r * math.cos(a), sg * r * math.sin(a)))
     return pts
 
 
-VIEW_COS = math.cos(math.radians(72))           # demi-angle du champ de vision (FOV large, diagonale)
-
-
 EYES = _eye_points()
+# Coque du casque (autour de la tête) : presque tout l'hémisphère avant, pour les bords d'écran et le retard
+# d'interpolation de BetterModel. Ornements extérieurs (cornes, ailes) : champ normal, sinon ils se creusent.
+VIEW_COS_SHELL = math.cos(math.radians(88))
+VIEW_COS = math.cos(math.radians(72))
+
+
 FACE_N = {'north': (0, 0, -1), 'south': (0, 0, 1), 'east': (1, 0, 0), 'west': (-1, 0, 0), 'up': (0, 1, 0),
           'down': (0, -1, 0)}
 
@@ -82,6 +91,8 @@ def cull_for_camera(e):
     f, t = e['from'], e['to']
     c = [(f[i] + t[i]) / 2 for i in range(3)]
     h = [(t[i] - f[i]) / 2 for i in range(3)]
+    shell = abs(c[0]) <= 4.8 and abs(c[2]) <= 4.8 and 21 <= c[1] <= 36
+    cone = VIEW_COS_SHELL if shell else VIEW_COS
     rot = e.get('rotation') or [0, 0, 0]
     axis = next((i for i in range(3) if rot[i]), None)
     keep = {}
@@ -103,7 +114,7 @@ def cull_for_camera(e):
                 for q in qs:
                     d = [q[i] - ey[i] for i in range(3)]
                     ln = math.sqrt(sum(v * v for v in d)) or 1
-                    if -d[2] / ln >= VIEW_COS:    # dans le champ de vision (vers -z)
+                    if -d[2] / ln >= cone:    # dans le champ de vision (vers -z)
                         seen = True
                         break
                 if seen:
@@ -293,7 +304,18 @@ def animations(gid):
         'pla_left_arm': [(0, (0, 0, 0)), (0.15, (-30, 0, -15)), (0.5, (0, 0, 0))],
         'ar_cape': [(0, (5, 0, 0)), (0.2, (35, 0, 0)), (0.5, (8, 0, 0))],
     }, gid)
-    return [idle, walk, attack, jump]
+    # Accroupi (joué par EvoPerso tant que le joueur est accroupi) : le corps descend comme la caméra, sinon en FPS
+    # elle passe dans l'armure. override : remplace marche/repos pendant l'accroupissement.
+    hold = lambda v: [(0, v), (1.0, v)]  # noqa: E731
+    sneak = _anim('sneak', 'loop', 1.0, {
+        'prl_right_leg': hold((-42, 0, 0)), 'pll_left_leg': hold((-42, 0, 0)),
+        'prfl_right_foreleg': hold((84, 0, 0)), 'plfl_left_foreleg': hold((84, 0, 0)),
+        'pw_waist': hold((-16, 0, 0)), 'pc_chest': hold((-6, 0, 0)),
+        'pra_right_arm': hold((-18, 0, 4)), 'pla_left_arm': hold((-18, 0, -4)),
+        'prfa_right_forearm': hold((-14, 0, 0)), 'plfa_left_forearm': hold((-14, 0, 0)),
+        'ar_cape': hold((24, 0, 0)),
+    }, gid, pos={'player_root': hold((0, -2.9, 0))}, override=True)
+    return [idle, walk, attack, jump, sneak]
 
 
 # ==================================================================================================================
