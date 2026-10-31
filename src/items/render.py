@@ -47,6 +47,8 @@ def render(img, elements, display, size=256, view='gui'):
             return [p[i] + t[i] for i in range(3)]
 
         for f in FACES:
+            if f not in e['faces']:
+                continue
             o, u, v, du, dv = face_frame(f, e['from'], e['to'])
             uv = e['faces'][f]['uv']
             x0, y0, x1, y1 = [round(c * W / 16) for c in uv]
